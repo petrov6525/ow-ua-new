@@ -7,6 +7,7 @@ export const fontStyles = StyleSheet.create({
     },
     noirProRegular: {
         fontFamily: 'noir-pro-regular',
+        color: 'white'
     },
     noirProMedium: {
         fontFamily: 'noir-pro-medium',

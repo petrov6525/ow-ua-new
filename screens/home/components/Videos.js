@@ -9,6 +9,10 @@ const HEADER_MAX_TOP = 0;
 const HEADER_MIN_TOP = -100;
 const SCROLL_DISTANCE = HEADER_MAX_TOP - HEADER_MIN_TOP;
 
+const HEADER_MAX_HEIGHT = 100;
+const HEADER_MIN_HEIGHT = 0;
+const SCROLL_DISTANCE_HEIGHT = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
 const DynamicHeader = ({value}) => {
     const animatedHeaderTop = value.interpolate({
         inputRange: [0, SCROLL_DISTANCE],
@@ -16,9 +20,15 @@ const DynamicHeader = ({value}) => {
         extrapolate: 'clamp',
     })
 
+    const animatedHeaderHeight = value.interpolate({
+        inputRange: [0, SCROLL_DISTANCE_HEIGHT],
+        outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+        extrapolate: 'clamp',
+    })
+
 
     return(
-        <Animated.View style={[styles.header,{top: animatedHeaderTop}]}>
+        <Animated.View style={[styles.header,{top: animatedHeaderTop, height: 100}]}>
             <Search />
             <Categories />
         </Animated.View>
@@ -38,11 +48,7 @@ const DynamicHeader = ({value}) => {
                    onScroll={Animated.event([
                        {nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
                >
-                   <Video />
-                   <Video />
-                   <Video />
-                   <Video />
-                   <Video />
+                   <Video style={{marginTop: 100}}  />
                    <Video />
                    <Video />
                    <Video />
@@ -59,9 +65,8 @@ const DynamicHeader = ({value}) => {
 
 const styles = StyleSheet.create({
     header: {
-        height: 100,
         position: 'absolute',
         zIndex: 10,
-        backgroundColor: '#0C0F14'
+        backgroundColor: 'transparent',
     }
 })

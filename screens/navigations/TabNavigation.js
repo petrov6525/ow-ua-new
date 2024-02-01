@@ -29,64 +29,64 @@ const screenOptions = {
 
 export default function TabNavigation() {
     return (
-        <NavigationContainer>
-            <Tab.Navigator screenOptions={{
-                tabBarShowLabel: true,
-                headerShown: false,
-                tabBarActiveTintColor: '#5A58C9',
-                activeColor: '#5A58C9',
-                tabBarStyle: {
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    elevation: 0,
-                    backgroundColor: "#0C0F14",
-                    height: 65,
-                    borderWidth: 0,
-                    borderColor: 'transparent',
-                    opacity: 0.8,
-                    paddingBottom: 15,
-                    paddingTop: 10
-                },
-                animation: 'fade_from_bottom'
-            }}>
-                <Tab.Screen name="Home" component={Home}
-                            options={{
-                                tabBarLabel: "Головна",
-                                tabBarIcon: ({focused}) => (
-                                    <MaterialCommunityIcons name="home" color={focused ? '#5A58C9' : 'white'} size={30} />
-                                )
-                            }}
-                />
+        <Tab.Navigator screenOptions={{
+            tabBarShowLabel: true,
+            headerShown: false,
+            tabBarActiveTintColor: '#5A58C9',
+            activeColor: '#5A58C9',
+            tabBarStyle: {
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                elevation: 0,
+                backgroundColor: "#0C0F14",
+                height: 65,
+                borderWidth: 0,
+                borderColor: 'transparent',
+                opacity: 0.8,
+                paddingBottom: 15,
+                paddingTop: 10
+            },
+            animation: 'fade_from_bottom'
+        }}>
+            <Tab.Screen name="Home" component={Home}
+                        options={{
+                            tabBarLabel: "Головна",
+                            tabBarIcon: ({focused}) => (
+                                <MaterialCommunityIcons name="home" color={focused ? '#5A58C9' : 'white'} size={30}/>
+                            )
+                        }}
 
-                <Tab.Screen name="Subscribes" component={Subscribes}
-                            options={{
-                                tabBarLabel: "Підписки",
-                                tabBarIcon: ({focused}) => (
-                                    <MaterialCommunityIcons
-                                        name="youtube-subscription" color={focused ? '#5A58C9' : 'white'} size={26} />
-                                )
-                            }}
-                />
+            />
 
-                <Tab.Screen name="Playlists" component={Playlists}
-                            options={{
-                                tabBarLabel: "Home",
-                                tabBarIcon: ({focused}) => (
-                                    <MaterialCommunityIcons name="playlist-play" color={focused ? '#5A58C9' : 'white'} size={30} />
-                                )
-                            }}
-                />
-                <Tab.Screen name="You" component={You}
-                            options={{
-                                tabBarLabel: "Home",
-                                tabBarIcon: ({focused}) => (
-                                    <MaterialIcons name="person-pin" color={focused ? '#5A58C9' : 'white'} size={30} />
-                                )
-                            }}
-                />
-            </Tab.Navigator>
-        </NavigationContainer>
+            <Tab.Screen name="Subscribes" component={Subscribes}
+                        options={{
+                            tabBarLabel: "Підписки",
+                            tabBarIcon: ({focused}) => (
+                                <MaterialCommunityIcons
+                                    name="youtube-subscription" color={focused ? '#5A58C9' : 'white'} size={26}/>
+                            )
+                        }}
+            />
+
+            <Tab.Screen name="Playlists" component={Playlists}
+                        options={{
+                            tabBarLabel: "Home",
+                            tabBarIcon: ({focused}) => (
+                                <MaterialCommunityIcons name="playlist-play" color={focused ? '#5A58C9' : 'white'}
+                                                        size={30}/>
+                            )
+                        }}
+            />
+            <Tab.Screen name="You" component={You}
+                        options={{
+                            tabBarLabel: "Home",
+                            tabBarIcon: ({focused}) => (
+                                <MaterialIcons name="person-pin" color={focused ? '#5A58C9' : 'white'} size={30}/>
+                            )
+                        }}
+            />
+        </Tab.Navigator>
     )
 }

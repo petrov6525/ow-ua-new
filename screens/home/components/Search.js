@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         width: '100%',
         position: 'relative',
-        color: 'white'
+        color: 'white',
+        // zIndex: 15,
+        backgroundColor: '#0C0F14'
     },
     main: {
         width: '100%',
