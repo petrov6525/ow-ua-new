@@ -7,7 +7,8 @@ import {VideoPage} from "../video_page/VideoPage";
 import {ChannelPage} from "../channel_page/ChannelPage";
 
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const config = {
     animation: 'spring',
