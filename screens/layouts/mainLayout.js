@@ -1,8 +1,15 @@
 import * as React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, View} from "react-native";
 import LayoutBlur from "../login/components/LayoutBlur";
+import * as NavigationBar from 'expo-navigation-bar';
+import {useEffect} from "react";
+import {rgbaColor} from "@shopify/react-native-skia";
 
 export default function MainLayout({children}) {
+
+    useEffect(() => {
+        NavigationBar.setBackgroundColorAsync('#0C0F14');
+    }, []);
 
     return(
         <View style={{flex: 1, backgroundColor: '#10121D'}}>
