@@ -1,4 +1,4 @@
-import BaseNavigation from "./screens/navigations/BaseNavigation";
+/*import BaseNavigation from "./screens/navigations/BaseNavigation";
 import 'react-native-gesture-handler';
 
 export default function App() {
@@ -7,7 +7,60 @@ export default function App() {
           <BaseNavigation />
       </>
   );
-}
+}*/
+
+import React from 'react';
+import { View, Text, Button, Modal, StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+const Stack = createStackNavigator();
+
+const HomeScreen = ({ navigation }) => (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Home Screen</Text>
+        <Button title="Open Modal" onPress={() => navigation.navigate('ModalScreen')} />
+    </View>
+);
+
+const ModalScreen = () => (
+    <Modal visible={true} presentationStyle="pageSheet">
+        {/*<Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: 'red', // Устанавливаем цвет фона системной панели
+                },
+                headerTintColor: 'white', // Устанавливаем цвет текста кнопок навигации
+            }}
+        >*/}
+            <Stack.Screen name="ModalContent" component={ModalContent} />
+        {/*</Stack.Navigator>*/}
+    </Modal>
+);
+
+const ModalContent = ({ navigation }) => (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Modal Screen</Text>
+        <Button title="Close" onPress={() => navigation.goBack()} />
+    </View>
+);
+
+const App = () => (
+    <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="ModalScreen" component={ModalScreen} />
+        </Stack.Navigator>
+    </NavigationContainer>
+);
+
+export default App;
+
+
+
+
+
+
 
 
 /*

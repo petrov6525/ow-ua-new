@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import { createStackNavigator } from '@react-navigation/stack';
 import {VideoPage} from "../video_page/VideoPage";
 import {ChannelPage} from "../channel_page/ChannelPage";
+import {CommentsModalPage} from "../comments/CommentsModalPage";
 
 
 // const Stack = createStackNavigator();
@@ -47,6 +48,12 @@ export default function BaseNavigation() {
                                   },
                 }} />
                 <Stack.Screen name={'ChannelPage'} component={ChannelPage} options={{headerShown: false}} />
+                <Stack.Screen name={'CommentsModalPage'} component={CommentsModalPage}
+                              options={{
+                                  headerShown: false,
+                                  presentation: 'modal',
+                                  animation: 'fade_from_bottom',
+                }} />
             </Stack.Navigator>
 
         </NavigationContainer>

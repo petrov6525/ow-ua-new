@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { ScrollView, View} from "react-native";
 import {Video} from "./Video";
 import {Categories} from "./Categories";
 import {Search} from "./Search";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 const DynamicHeader = () => {
 

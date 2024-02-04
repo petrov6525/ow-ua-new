@@ -11,6 +11,7 @@ export const fontStyles = StyleSheet.create({
     },
     noirProMedium: {
         fontFamily: 'noir-pro-medium',
+        color: 'white'
     },
     noirProHeavy: {
         fontFamily: 'noir-pro-heavy',
