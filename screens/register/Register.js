@@ -21,6 +21,7 @@ import GoogleAuthService from "../../services/googleAuthService";
 import LoginFormErrors from "../components/loginFormErrors";
 import {addError, clearErrors} from "../../store/slice/modal/modalSlice";
 import {setIsRequest, setRegisterEmail} from "../../store/slice/auth/authSlice";
+import AuthService from "../../services/authService";
 
 export default function Register({navigation}) {
     const dispatch = useDispatch();

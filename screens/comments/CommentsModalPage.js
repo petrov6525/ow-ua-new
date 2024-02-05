@@ -17,6 +17,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {CommentEditButton} from "./components/CommentEditButton";
 import {Comment} from "./components/Comment";
 import {CommentForm} from "./components/CommentForm";
+import {useSelector} from "react-redux";
 
 
 
@@ -25,10 +26,16 @@ const comment = {
 }
 export const CommentsModalPage = ({modalVisible, setModalVisible}) => {
     const {navigate, goBack} = useNavigation();
+    const isAuth = useSelector(
+        (state) => state.authReducer.isAuth
+    );
 
-    useEffect(() => {
-        NavigationBar.setBackgroundColorAsync('#0C0F14');
-    }, []);
+    const focusHandle = () => {
+        if (!isAuth) {
+            setModalVisible(false);
+            navigate('NeedAuth', {text: "Авторизуйтесь щоб поставити оцінку відео"})
+        }
+    }
 
     return (
         <Modal
@@ -39,10 +46,6 @@ export const CommentsModalPage = ({modalVisible, setModalVisible}) => {
                 setModalVisible(false)
             }}
             hardwareAccelerated={true}
-            onShow={async () => {
-                await NavigationBar.setBackgroundColorAsync('#0C0F14');
-                console.log("Modal callback");
-            }}
         >
             <SafeAreaView style={{flex: 1, paddingBottom: 35}}>
             <View style={styles.modalContainer}>
@@ -69,7 +72,7 @@ export const CommentsModalPage = ({modalVisible, setModalVisible}) => {
                     </View>
                 </View>
             </View>
-                <CommentForm />
+                <CommentForm onPress={focusHandle} />
             </SafeAreaView>
         </Modal>
     )

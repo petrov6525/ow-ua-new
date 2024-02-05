@@ -11,6 +11,9 @@ export const NeedAuth = ({message}) => {
     const params = route.params;
 
     useEffect(() => {
+        if (!params?.text) {
+            return ;
+        }
         const backHandler = BackHandler.addEventListener(
             'hardwareBackPress',
             backPressHandler

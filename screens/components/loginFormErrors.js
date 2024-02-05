@@ -4,10 +4,15 @@ import {welcomeStyles} from "../../styles/welcome";
 import {useDispatch, useSelector} from "react-redux";
 import {clearErrors} from "../../store/slice/modal/modalSlice";
 import {fontStyles} from "../../styles/font";
+import {useEffect} from "react";
 
 export default function LoginFormErrors({visible, setVisible, bottom}) {
     const errors = useSelector((state)=> state.modalReducer.errors);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(errors);
+    }, [errors]);
 
     function handleClose() {
         dispatch(clearErrors());

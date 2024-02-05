@@ -1,10 +1,22 @@
 import {Text, TouchableOpacity, StyleSheet} from "react-native";
 import {fontStyles} from "../../../styles/font";
+import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
 
 
 export const Subscribe = () => {
+    const { navigate } = useNavigation();
+    const isAuth = useSelector(
+        (state) => state.authReducer.isAuth
+    );
+
+    const pressHandle = () => {
+        if (!isAuth) {
+            navigate('NeedAuth', {text: "Авторизуйтесь щоб поставити оцінку відео"})
+        }
+    }
     return(
-        <TouchableOpacity style={styles.subscribe}>
+        <TouchableOpacity style={styles.subscribe} onPress={pressHandle}>
             <Text style={styles.text}>Підписатись</Text>
         </TouchableOpacity>
     )

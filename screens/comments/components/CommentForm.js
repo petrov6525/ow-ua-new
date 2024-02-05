@@ -2,19 +2,28 @@ import {TextInput, TouchableOpacity, View, StyleSheet} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {useEffect, useRef, useState} from "react";
+import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
 
 
-export const CommentForm = ({visible, setVisible}) => {
+export const CommentForm = ({onPress}) => {
     const inputRef = useRef(null);
-
+    const isAuth = useSelector(
+        (state) => state.authReducer.isAuth
+    );
 
     return (
         <View style={styles.box}>
-            <TextInput style={styles.input} multiline={true} focusable={true} autoFocus={false}
-                    ref={inputRef}
+            {isAuth ? <TextInput style={styles.input} multiline={true} focusable={true} autoFocus={false}
+                                 ref={inputRef}
             >
 
             </TextInput>
+            : <TouchableOpacity onPress={onPress} style={styles.input}>
+
+                </TouchableOpacity>
+            }
+
             <View style={styles.arrowBox}>
                 <TouchableOpacity style={styles.arrow} >
                     <MaterialCommunityIcons name="arch" color={'rgba(255,255,255,0.8)'} size={30} />
@@ -34,7 +43,7 @@ const styles = StyleSheet.create({
         zIndex: 100,
     },
     input: {
-        // height: 50,
+        height: 50,
         padding: 10,
         borderRadius: 15,
         borderColor: '#5A58C9',

@@ -30,7 +30,7 @@ export default function Login({navigation}) {
             const result = await googleAuthService.handleSignInWithGoogle(response);
             setModalVisible(!result);
         }
-        // login(response);
+        login(response);
     }, [response]);
 
     return (
