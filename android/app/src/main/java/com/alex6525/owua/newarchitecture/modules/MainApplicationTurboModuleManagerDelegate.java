@@ -1,4 +1,4 @@
-package com.owua.newarchitecture.modules;
+package com.alex6525.owua.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

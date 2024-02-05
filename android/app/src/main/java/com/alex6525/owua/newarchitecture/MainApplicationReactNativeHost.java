@@ -1,4 +1,4 @@
-package com.owua.newarchitecture;
+package com.alex6525.owua.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.owua.BuildConfig;
-import com.owua.newarchitecture.components.MainComponentsRegistry;
-import com.owua.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.alex6525.owua.BuildConfig;
+import com.alex6525.owua.newarchitecture.components.MainComponentsRegistry;
+import com.alex6525.owua.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

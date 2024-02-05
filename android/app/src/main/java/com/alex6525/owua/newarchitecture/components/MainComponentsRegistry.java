@@ -1,4 +1,4 @@
-package com.owua.newarchitecture.components;
+package com.alex6525.owua.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
