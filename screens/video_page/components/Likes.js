@@ -1,21 +1,34 @@
 import {View, StyleSheet, TouchableOpacity, Text, Image} from "react-native";
-import {fontStyles} from "../../styles/font";
+import {fontStyles} from "../../../styles/font";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
+import {NeedAuth} from "../../needAuth/NeedAuth";
 
 
 export const Likes = () => {
+    const { navigate } = useNavigation();
+    const isAuth = useSelector(
+        (state) => state.authReducer.isAuth
+    );
+
+    const pressHandle = () => {
+        if (!isAuth) {
+            navigate('NeedAuth', {text: "Авторизуйтесь щоб поставити оцінку відео"})
+        }
+    }
     return (
         <View style={styles.div}>
             <View>
-                <TouchableOpacity style={styles.like}>
-                    <Image source={require('../../assets/icons/like.png')} style={{width: 20, height: 17}}/>
+                <TouchableOpacity style={styles.like} onPress={pressHandle}>
+                    <Image source={require('../../../assets/icons/like.png')} style={{width: 20, height: 17}}/>
                 </TouchableOpacity>
                 <Text style={styles.text}>44 тис</Text>
             </View>
 
             <View>
-                <TouchableOpacity style={styles.dislike}>
-                    <Image source={require('../../assets/icons/dislike.png')} style={{width: 20, height: 17}}/>
+                <TouchableOpacity style={styles.dislike} onPress={pressHandle}>
+                    <Image source={require('../../../assets/icons/dislike.png')} style={{width: 20, height: 17}}/>
                 </TouchableOpacity>
                 <Text style={styles.text}>12 тис</Text>
             </View>

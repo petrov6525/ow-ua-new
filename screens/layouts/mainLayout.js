@@ -3,7 +3,6 @@ import {SafeAreaView, StatusBar, StyleSheet, View} from "react-native";
 import LayoutBlur from "../login/components/LayoutBlur";
 import * as NavigationBar from 'expo-navigation-bar';
 import {useEffect} from "react";
-import {rgbaColor} from "@shopify/react-native-skia";
 
 export default function MainLayout({children}) {
 
@@ -16,7 +15,6 @@ export default function MainLayout({children}) {
             <LayoutBlur/>
             <StatusBar
                 translucent={false}
-                // backgroundColor="rgba(0, 0, 0, 0)"
                 backgroundColor="black"
                 barStyle="light-content"
             />

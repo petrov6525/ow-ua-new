@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity} from "react-native";
-import {fontStyles} from "../../styles/font";
+import {fontStyles} from "../../../styles/font";
 
 
 export const Details = () => {

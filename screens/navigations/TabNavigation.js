@@ -55,7 +55,7 @@ export default function TabNavigation() {
 
             <Tab.Screen name="Playlists" component={Playlists}
                         options={{
-                            tabBarLabel: "Home",
+                            tabBarLabel: "Плейлісти",
                             tabBarIcon: ({focused}) => (
                                 <MaterialCommunityIcons name="playlist-play" color={focused ? '#5A58C9' : 'rgba(255,255,255,0.8)'}
                                                         size={30}/>
@@ -64,7 +64,7 @@ export default function TabNavigation() {
             />
             <Tab.Screen name="You" component={You}
                         options={{
-                            tabBarLabel: "Home",
+                            tabBarLabel: "Ви",
                             tabBarIcon: ({focused}) => (
                                 <MaterialIcons name="person-pin" color={focused ? '#5A58C9' : 'rgba(255,255,255,0.8)'} size={30}/>
                             )

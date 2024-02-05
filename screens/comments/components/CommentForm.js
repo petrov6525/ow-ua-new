@@ -6,30 +6,17 @@ import {useEffect, useRef, useState} from "react";
 
 export const CommentForm = ({visible, setVisible}) => {
     const inputRef = useRef(null);
-    const [isFocus, setIsFocus] = useState(false);
-
-    useEffect(() => {
-        if (isFocus && inputRef.current) {
-            inputRef.current.focus();
-        } else {
-            inputRef.current.blur();
-        }
-    }, [isFocus]);
-
-    useEffect(() => {
-        setIsFocus(visible);
-    }, [visible, setIsFocus]);
 
 
     return (
-        <View style={[styles.box,{height: visible ? 'auto' : 0, opacity: visible ? 1 : 0}]}>
-            <TextInput style={styles.input} multiline={true} focusable={true} autoFocus={isFocus}
+        <View style={styles.box}>
+            <TextInput style={styles.input} multiline={true} focusable={true} autoFocus={false}
                     ref={inputRef}
             >
 
             </TextInput>
             <View style={styles.arrowBox}>
-                <TouchableOpacity style={styles.arrow} onPress={()=> setVisible(!visible)}>
+                <TouchableOpacity style={styles.arrow} >
                     <MaterialCommunityIcons name="arch" color={'rgba(255,255,255,0.8)'} size={30} />
                 </TouchableOpacity>
             </View>
@@ -39,13 +26,12 @@ export const CommentForm = ({visible, setVisible}) => {
 
 const styles = StyleSheet.create({
     box: {
-        width: '100%',
         position: 'absolute',
-        top: 130,
+        bottom: 2,
+        left: 0,
+        right: 0,
         flexDirection: 'row',
         zIndex: 100,
-        flex: 1,
-        maxHeight: 100
     },
     input: {
         // height: 50,

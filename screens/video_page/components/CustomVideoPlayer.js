@@ -2,7 +2,7 @@ import {ResizeMode} from "expo-av";
 import VideoPlayer from "expo-video-player";
 import {BackHandler, Dimensions, StyleSheet, Text, TouchableOpacity} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {fontStyles} from "../../styles/font";
+import {fontStyles} from "../../../styles/font";
 import * as NavigationBar from "expo-navigation-bar";
 import {setStatusBarHidden} from "expo-status-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -97,7 +97,7 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
                     },
                     usePoster: true,
-                    posterSource: require('../../assets/video_img.png'),
+                    posterSource: require('../../../assets/video_img.png'),
                     posterStyle:{width: videoWidth, height: videoHeight},
                     // source: require('../../assets/video/video_1.mp4'),
                     ref: video,

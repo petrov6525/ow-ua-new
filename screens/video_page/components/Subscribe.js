@@ -1,5 +1,5 @@
 import {Text, TouchableOpacity, StyleSheet} from "react-native";
-import {fontStyles} from "../../styles/font";
+import {fontStyles} from "../../../styles/font";
 
 
 export const Subscribe = () => {

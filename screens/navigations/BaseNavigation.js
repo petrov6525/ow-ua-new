@@ -6,6 +6,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {VideoPage} from "../video_page/VideoPage";
 import {ChannelPage} from "../channel_page/ChannelPage";
 import {CommentsModalPage} from "../comments/CommentsModalPage";
+import Login from "../login/Login";
+import Register from "../register/Register";
+import EmailLogin from "../emailLogin/EmailLogin";
+import FinishRegistration from "../finishRegister/FinishRegistration";
+import {NeedAuth} from "../needAuth/NeedAuth";
 
 
 // const Stack = createStackNavigator();
@@ -29,31 +34,14 @@ export default function BaseNavigation() {
             <Stack.Navigator screenOptions={{
                 animation: 'fade_from_bottom'
             }}>
-                <Stack.Screen name={'Main'} component={TabNavigation}
-                              options={{
-                                  headerShown: false,
-                                  gestureDirection: "vertical",
-                                  transitionSpec: {
-                                      open: config,
-                                      close: config,
-                                  },
-                }}/>
-                <Stack.Screen name={'VideoPage'} component={VideoPage}
-                              options={{
-                                  headerShown: false,
-                                  gestureDirection: "vertical",
-                                  transitionSpec: {
-                                      open: config,
-                                      close: config,
-                                  },
-                }} />
+                <Stack.Screen name={'Main'} component={TabNavigation} options={{headerShown: false}}/>
+                <Stack.Screen name={'VideoPage'} component={VideoPage} options={{headerShown: false}} />
                 <Stack.Screen name={'ChannelPage'} component={ChannelPage} options={{headerShown: false}} />
-                <Stack.Screen name={'CommentsModalPage'} component={CommentsModalPage}
-                              options={{
-                                  headerShown: false,
-                                  presentation: 'modal',
-                                  animation: 'fade_from_bottom',
-                }} />
+                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
+                <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
+                <Stack.Screen name="EmailLogin" component={EmailLogin} options={{headerShown: false}}/>
+                <Stack.Screen name="FinishRegistration" component={FinishRegistration} options={{headerShown: false}}/>
+                <Stack.Screen name="NeedAuth" component={NeedAuth} options={{headerShown: false}}/>
             </Stack.Navigator>
 
         </NavigationContainer>

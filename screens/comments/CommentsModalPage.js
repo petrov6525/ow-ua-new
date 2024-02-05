@@ -1,41 +1,122 @@
-import {BackHandler, Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {
+    BackHandler,
+    Button, Image,
+    Modal,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {fontStyles} from "../../styles/font";
 import {useNavigation} from "@react-navigation/native";
 import {useEffect} from "react";
 import * as NavigationBar from "expo-navigation-bar";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {CommentEditButton} from "./components/CommentEditButton";
+import {Comment} from "./components/Comment";
+import {CommentForm} from "./components/CommentForm";
 
 
-export const CommentsModalPage = () => {
+
+const comment = {
+    text: "This is one of the most amazing AMV's I've ever watched! This is one of the most amazing AMV's I've ever watched! This is one of the most amazing AMV's I've ever watched!"
+}
+export const CommentsModalPage = ({modalVisible, setModalVisible}) => {
     const {navigate, goBack} = useNavigation();
 
     useEffect(() => {
-        console.log("Effect");
         NavigationBar.setBackgroundColorAsync('#0C0F14');
     }, []);
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <Modal
+            visible={modalVisible}
+            transparent={true}
+            animationType={'slide'}
+            onRequestClose={() => {
+                setModalVisible(false)
+            }}
+            hardwareAccelerated={true}
+            onShow={async () => {
+                await NavigationBar.setBackgroundColorAsync('#0C0F14');
+                console.log("Modal callback");
+            }}
+        >
+            <SafeAreaView style={{flex: 1, paddingBottom: 35}}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
-                    <Text style={fontStyles.noirProRegular}>Это ваше модальное окно!</Text>
+                    <View style={styles.container}
+                    >
+                        <View style={styles.commentHeader}>
+                            <Text style={styles.text}>Коментарі <Text style={styles.commentsCount}>1,2
+                                тис.</Text></Text>
+                            {/*<CommentEditButton visible={true} />*/}
+                        </View>
+                        <ScrollView
+                            style={{marginBottom: 40}}
+                            scrollEnabled={true}
+                        >
+                            <Comment comment={comment} />
+                            <Comment comment={comment} />
+                            <Comment comment={comment} />
+                            <Comment comment={comment} />
+                            <Comment comment={comment} />
+                            <Comment comment={comment} />
+                            <Comment comment={comment} />
+                        </ScrollView>
+                    </View>
                 </View>
             </View>
-        </SafeAreaView>
+                <CommentForm />
+            </SafeAreaView>
+        </Modal>
     )
 }
 
+
 const styles = StyleSheet.create({
+    container: {
+        paddingLeft: 20,
+        paddingTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 20,
+        borderRadius: 15,
+        borderColor: '#5A58C9',
+        borderWidth: 1,
+    },
+    text: {
+        ...fontStyles.noirProMedium,
+        marginBottom: 20
+    },
+    commentsCount: {
+        color: '#87898E'
+    },
+    scrollViewDefault: {
+        paddingRight: 20,
+        height: 35
+    },
+    scrollViewCollapsed: {
+        paddingRight: 20,
+    },
+    commentHeader: {
+        flexDirection: 'row',
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+        paddingRight: 20
+    },
     modalContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // полупрозрачный фон
     },
     modalContent: {
-        backgroundColor: 'red',
-        padding: 20,
-        borderRadius: 10,
+        backgroundColor: '#0C0F14',
+        paddingTop: 20,
         height: '80%', // 80% от высоты экрана
-        width: '50%', // 50% от ширины экрана
-    },
+        width: '100%', // 50% от ширины экрана
+    }
 })

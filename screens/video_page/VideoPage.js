@@ -1,70 +1,41 @@
-import MainLayout from "../layouts/mainLayout";
 import {
-    Text,
     View,
     StyleSheet,
     SafeAreaView,
-    Button,
-    ActivityIndicator,
-    Dimensions,
-    TouchableOpacity, ScrollView
+    ScrollView,
+    Text
 } from "react-native";
-import {fontStyles} from "../../styles/font";
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {useState} from "react";
 import React from "react";
-import {Video, ResizeMode, VideoNaturalSize} from 'expo-av';
-import nativeDeviceInfo from "react-native/Libraries/Utilities/NativeDeviceInfo";
-import VideoPlayer from 'expo-video-player'
-import {size} from "@shopify/react-native-skia";
-import {ActivityIndicatorProps, BackHandler} from "react-native";
-import * as ScreenOrientation from "expo-screen-orientation";
-import {setStatusBarHidden} from 'expo-status-bar'
-import * as NavigationBar from 'expo-navigation-bar';
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {DraggableVideo} from "../components/DraggableVideo";
-import {CustomVideoPlayer} from "./CustomVideoPlayer";
-import {Likes} from "./Likes";
-import {Subscribe} from "./Subscribe";
-import {Details} from "./Details";
-import {Comments} from "./Comments";
-import {CommentForm} from "./CommentForm";
-import {CommentsBox} from "./components/CommentsBox";
+import {CustomVideoPlayer} from "./components/CustomVideoPlayer";
+import {Likes} from "./components/Likes";
+import {Subscribe} from "./components/Subscribe";
+import {Details} from "./components/Details";
+import {Comments} from "./components/Comments";
+import {RecommendedVideos} from "./components/RecommendedVideos";
+import {fontStyles} from "../../styles/font";
+import {useSelector} from "react-redux";
 
 export const VideoPage = () => {
     const route = useRoute();
+    const { navigate } = useNavigation();
     const {videoParams} = route.params;
     const [status, setStatus] = React.useState({});
     const [inFullScreen, setInFullScreen] = useState(false);
-    const { navigate } = useNavigation();
+    const isAuth = useSelector(
+        (state) => state.authReducer.isAuth
+    );
 
 
-    const toHomeHandle = (isFullScreen) => {
-        console.log("Swipe");
-        console.log(isFullScreen);
-        /*BackHandler.removeEventListener(
-            'hardwareBackPress',
-            handleBackPress
-        );
-        navigate('Main');*/
-    }
-
-    const handleBackPress = () => {
-        console.log("Back");
-        return true;
-    }
-
-    useEffect(() => {
-        // console.log(inFullScreen);
-    }, [inFullScreen]);
 
 
     const Panel = () => {
-        return(
+        return (
             <View style={styles.panel}>
-                <Likes />
-                <Details />
-                <Subscribe />
+                <Likes/>
+                <Details/>
+                <Subscribe/>
             </View>
         )
     }
@@ -73,10 +44,9 @@ export const VideoPage = () => {
     return (
         <SafeAreaView style={{backgroundColor: '#0C0F14'}}>
             <View
-                // style={{marginBottom: 50}}
             >
                 {/*<DraggableVideo eventHandler={toHomeHandle} isDraggable={!inFullScreen}>*/}
-                    <CustomVideoPlayer inFullScreen={inFullScreen} setInFullScreen={setInFullScreen}/>
+                <CustomVideoPlayer inFullScreen={inFullScreen} setInFullScreen={setInFullScreen}/>
                 {/*</DraggableVideo>*/}
                 <ScrollView
                     horizontal={false}
@@ -84,8 +54,12 @@ export const VideoPage = () => {
                     stickyHeaderIndices={[0]}
                     style={{marginBottom: 465}}
                 >
-                    <Panel />
-                    <Comments />
+                    <View style={{backgroundColor: '#0C0F14'}}>
+                        <Text style={styles.videoTitle}>Video Title</Text>
+                        <Panel/>
+                        <Comments/>
+                    </View>
+                    <RecommendedVideos />
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -94,7 +68,7 @@ export const VideoPage = () => {
 
 const styles = StyleSheet.create({
     panel: {
-        paddingTop: 20,
+        paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 20,
         paddingRight: 20,
@@ -102,6 +76,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: "space-between",
         backgroundColor: '#0C0F14',
-        // backgroundColor: 'red'
+    },
+    videoTitle: {
+        ...fontStyles.noirProRegular,
+        paddingTop: 5,
+        paddingLeft: 10
     }
 })

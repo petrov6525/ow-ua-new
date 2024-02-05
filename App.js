@@ -1,15 +1,17 @@
-/*import BaseNavigation from "./screens/navigations/BaseNavigation";
+import BaseNavigation from "./screens/navigations/BaseNavigation";
 import 'react-native-gesture-handler';
+import {Provider} from "react-redux";
+import {store} from "./store/store";
 
 export default function App() {
   return (
-      <>
+      <Provider store={store}>
           <BaseNavigation />
-      </>
+      </Provider>
   );
-}*/
+}
 
-import React from 'react';
+/*import React from 'react';
 import { View, Text, Button, Modal, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -25,16 +27,16 @@ const HomeScreen = ({ navigation }) => (
 
 const ModalScreen = () => (
     <Modal visible={true} presentationStyle="pageSheet">
-        {/*<Stack.Navigator
+        {/!*<Stack.Navigator
             screenOptions={{
                 headerStyle: {
                     backgroundColor: 'red', // Устанавливаем цвет фона системной панели
                 },
                 headerTintColor: 'white', // Устанавливаем цвет текста кнопок навигации
             }}
-        >*/}
+        >*!/}
             <Stack.Screen name="ModalContent" component={ModalContent} />
-        {/*</Stack.Navigator>*/}
+        {/!*</Stack.Navigator>*!/}
     </Modal>
 );
 
@@ -54,7 +56,7 @@ const App = () => (
     </NavigationContainer>
 );
 
-export default App;
+export default App;*/
 
 
 
