@@ -18,7 +18,7 @@
     "@reduxjs/toolkit": "^2.1.0",
     "@shopify/react-native-skia": "0.1.172",
     "axios": "^1.6.7",
-    "expo": "~48.0.21",
+    "expo": "~49.0.18",
     "expo-asset": "~8.9.1",
     "expo-auth-session": "~4.0.3",
     "expo-av": "~13.2.1",
