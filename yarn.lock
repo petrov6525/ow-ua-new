@@ -4867,10 +4867,10 @@ expo-auth-session@~3.8.0:
     invariant "^2.2.4"
     qs "6.9.1"
 
-expo-av@~13.0.3:
-  version "13.0.3"
-  resolved "https://registry.npmjs.org/expo-av/-/expo-av-13.0.3.tgz"
-  integrity sha512-9SpXOjY2MUK+jCIL68EUro/aHBlbZ3B4cY1nRr2aTPfv/dLD3bXRZNTTtSwOgsHbuKO6XwjHgCoYbd9T0GcE4A==
+expo-av@^13.10.5:
+  version "13.10.5"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-13.10.5.tgz#cdce4db8c0f896be88cc881994704a251a1e63ff"
+  integrity sha512-w45oCoe+8PunDeM0rh/Ut6UaGh7OjEJOCjAiQy3nCxpA8FaXB17KaqpsvkAXIMvceHYWndH8+D29esUTS6wEsA==
 
 expo-constants@~14.0.0:
   version "14.0.2"

@@ -9,11 +9,15 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import {useNavigation} from "@react-navigation/native";
 import {useEffect, useState} from "react";
 import React from "react";
+import {useSelector} from "react-redux";
 
 
 export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
     const {navigate} = useNavigation();
     const video = React.useRef(null);
+    const isFullScreen = useSelector(
+        (state) => state.videoReducer.isFullScreen
+    );
 
     const videoWidth = inFullScreen ? Dimensions.get('screen').height : Dimensions.get('screen').width;
     // const videoWidth = 500;
@@ -93,13 +97,13 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
                 videoProps={{
                     shouldPlay: false,
                     resizeMode: ResizeMode.CONTAIN,
-                    source: {
+                    /*source: {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                    },
+                    },*/
                     usePoster: true,
                     posterSource: require('../../../assets/video_img.png'),
                     posterStyle:{width: videoWidth, height: videoHeight},
-                    // source: require('../../assets/video/video_1.mp4'),
+                    source: require('../../../assets/video/video_1.mp4'),
                     ref: video,
                     isMuted: true,
                 }}
