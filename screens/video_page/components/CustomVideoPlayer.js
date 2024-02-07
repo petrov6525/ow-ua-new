@@ -9,15 +9,13 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import {useNavigation} from "@react-navigation/native";
 import {useEffect, useState} from "react";
 import React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setIsFullScreen} from "../../../store/slice/videoSlice";
 
 
 export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
-    const {navigate} = useNavigation();
+    const navigation = useNavigation();
     const video = React.useRef(null);
-    const isFullScreen = useSelector(
-        (state) => state.videoReducer.isFullScreen
-    );
 
     const videoWidth = inFullScreen ? Dimensions.get('screen').height : Dimensions.get('screen').width;
     // const videoWidth = 500;
@@ -31,6 +29,7 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT)
         video.current.setStatusAsync({
             // shouldPlay: true,
+
         })
     }
 
@@ -52,10 +51,6 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
         };
     }, []);
 
-    useEffect(() => {
-        // console.log(inFullScreen);
-    }, [inFullScreen]);
-
 
     const handleBackPress = () => {
         return true;
@@ -68,11 +63,11 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
                         'hardwareBackPress',
                         handleBackPress
                     );
-                    navigate('Main');
+                    navigation.goBack();
                 }}
                 style={[styles.home, {display: inFullScreen ? 'none' : 'flex'}]}>
-                <MaterialCommunityIcons name="home" color={'rgba(255,255,255,0.8)'} size={30}/>
-                <Text style={fontStyles.noirProRegular}>На головну</Text>
+                <MaterialCommunityIcons name="arrow-left" color={'rgba(255,255,255,0.8)'} size={30}/>
+                <Text style={fontStyles.noirProRegular}>Назад</Text>
             </TouchableOpacity>
         )
     }
@@ -95,7 +90,7 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
             <VideoPlayer
                 header={<VideoHeader/>}
                 videoProps={{
-                    shouldPlay: false,
+                    shouldPlay: true,
                     resizeMode: ResizeMode.CONTAIN,
                     /*source: {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',

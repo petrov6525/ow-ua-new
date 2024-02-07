@@ -2,7 +2,8 @@ import {createSlice} from "@reduxjs/toolkit";
 
 
 const initialState = {
-    isFullScreen: false
+    isFullScreen: false,
+    currentChannelTitle: ''
 }
 
 const videoSlice = createSlice({
@@ -11,9 +12,12 @@ const videoSlice = createSlice({
     reducers: {
         setIsFullScreen: (state, action) => {
             state.isFullScreen = action.payload
+        },
+        setCurrentChannelTitle: (state, action) => {
+            state.currentChannelTitle = action.payload
         }
     }
 })
 
-export const { setIsFullScreen } = videoSlice.actions;
+export const { setIsFullScreen, setCurrentChannelTitle } = videoSlice.actions;
 export default videoSlice.reducer;

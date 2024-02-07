@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, View, Image} from "react-native";
 import {fontStyles} from "../../../styles/font";
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 
 
@@ -17,9 +17,16 @@ const video = {
 
 export const Video = ({style}) => {
     const navigation = useNavigation();
+    const { params } = useRoute();
 
     const handleVideoPage = () => {
-        navigation.navigate('VideoPage', {video: video});
+        navigation.goBack();
+        navigation.navigate('VideoPage', {style: style});
+    }
+
+    const handleChannelPage = () => {
+
+        navigation.navigate('ChannelPage');
     }
 
     return (
@@ -30,8 +37,7 @@ export const Video = ({style}) => {
             </View>
             <View style={{padding: 15, flexDirection: 'row'}}>
                 <Image source={video.channelLogo} style={{width: 60, height: 60, marginRight: 15}}
-                       onTouchEnd={()=> {
-                           navigation.navigate('ChannelPage')}}/>
+                       onTouchEnd={handleChannelPage}/>
                 <View onTouchEnd={handleVideoPage}>
                     <Text style={[fontStyles.noirProRegular, {fontSize: 17}]}>{video.title}</Text>
                     <Text style={[fontStyles.noirProRegular, {

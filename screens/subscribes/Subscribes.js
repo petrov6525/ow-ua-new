@@ -14,11 +14,12 @@ import {SubscribersVideos} from "./components/SubscribersVideos";
 
 
 const Header = () => {
+    const navigation = useNavigation();
     return (
         <View style={{paddingTop: 20, paddingBottom: 20, backgroundColor: "#0C0F14",}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 20, paddingRight: 20}}>
                 <LogoCenter/>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('AllSubscribes')}>
                     <Text style={fontStyles.noirProMedium}>All</Text>
                 </TouchableOpacity>
             </View>
