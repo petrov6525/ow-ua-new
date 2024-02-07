@@ -1,4 +1,3 @@
-/*
 import BaseNavigation from "./screens/navigations/BaseNavigation";
 import 'react-native-gesture-handler';
 import {Provider} from "react-redux";
@@ -11,7 +10,6 @@ export default function App() {
       </Provider>
   );
 }
-*/
 
 /*import {Button, SafeAreaView, Text, View} from "react-native";
 import * as WebBrowser from 'expo-web-browser';
@@ -93,7 +91,7 @@ export default App;*/
 
 
 
-
+/*
 import * as ScreenOrientation from 'expo-screen-orientation'
 import { Dimensions, ScrollView, StyleSheet, Text } from 'react-native'
 import { ResizeMode } from 'expo-av'
@@ -121,7 +119,7 @@ const App = () => {
             style={styles.container}
             contentContainerStyle={styles.contentContainer}
         >
-            {/*<Text style={[styles.text, { fontWeight: 'bold', textTransform: 'uppercase' }]}>
+            {/!*<Text style={[styles.text, { fontWeight: 'bold', textTransform: 'uppercase' }]}>
                 Examples
             </Text>
              <Text>ShouldPlay (autoplay) is true only in the first example</Text>
@@ -134,9 +132,9 @@ const App = () => {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
                     },
                 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>Local file</Text>
+            {/!*<Text style={styles.text}>Local file</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -144,9 +142,9 @@ const App = () => {
                     source: require('./local.mp4'),
                 }}
                 style={{ height: 160 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>Only video without controls</Text>
+            {/!*<Text style={styles.text}>Only video without controls</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -163,9 +161,9 @@ const App = () => {
                 }}
                 timeVisible={false}
                 style={{ height: 160 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>Some styling</Text>
+            {/!*<Text style={styles.text}>Some styling</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -179,9 +177,9 @@ const App = () => {
                     controlsBackgroundColor: 'red',
                     height: 200,
                 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>With custom icons</Text>
+            {/!*<Text style={styles.text}>With custom icons</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -195,9 +193,9 @@ const App = () => {
                     pause: <Text style={{ color: '#FFF' }}>PAUSE</Text>,
                 }}
                 style={{ height: 160 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>With some more styling</Text>
+            {/!*<Text style={styles.text}>With some more styling</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -212,9 +210,9 @@ const App = () => {
                     videoBackgroundColor: 'yellow',
                     controlsBackgroundColor: 'blue',
                 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>With Mute</Text>
+            {/!*<Text style={styles.text}>With Mute</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -230,9 +228,9 @@ const App = () => {
                     isMute,
                 }}
                 style={{ height: 160 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>Fullscren icon hidden</Text>
+            {/!*<Text style={styles.text}>Fullscren icon hidden</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -245,9 +243,9 @@ const App = () => {
                     visible: false,
                 }}
                 style={{ height: 160 }}
-            />*/}
+            />*!/}
 
-            {/*<Text style={styles.text}>Ref - clicking on Enter/Exit fullscreen changes playing</Text>
+            {/!*<Text style={styles.text}>Ref - clicking on Enter/Exit fullscreen changes playing</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -273,16 +271,17 @@ const App = () => {
                     inFullscreen,
                 }}
                 style={{ height: 160 }}
-            />*/}
+            />*!/}
 
             <Text style={styles.text}>Fullscren</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: true,
+                    isMuted: true,
                     resizeMode: ResizeMode.CONTAIN,
-                    /*source: {
+                    /!*source: {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                    },*/
+                    },*!/
                     source: require('./local.mp4'),
                     ref: refVideo2,
                 }}
@@ -309,7 +308,7 @@ const App = () => {
                 }}
             />
 
-            {/*<Text style={styles.text}>Custom title</Text>
+            {/!*<Text style={styles.text}>Custom title</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -322,7 +321,7 @@ const App = () => {
                     videoBackgroundColor: 'black',
                 }}
                 header={<Text style={{ color: '#FFF' }}>Custom title</Text>}
-            />*/}
+            />*!/}
         </ScrollView>
     )
 }
@@ -343,7 +342,12 @@ const styles = StyleSheet.create({
     },
 })
 
-export default App
+export default App*/
+
+
+
+
+
 
 
 /*import * as React from 'react';
