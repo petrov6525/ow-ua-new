@@ -1,4 +1,4 @@
-/*import BaseNavigation from "./screens/navigations/BaseNavigation";
+import BaseNavigation from "./screens/navigations/BaseNavigation";
 import 'react-native-gesture-handler';
 import {Provider} from "react-redux";
 import {store} from "./store/store";
@@ -9,9 +9,9 @@ export default function App() {
           <BaseNavigation />
       </Provider>
   );
-}*/
+}
 
-import {Button, SafeAreaView, Text, View} from "react-native";
+/*import {Button, SafeAreaView} from "react-native";
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,7 +36,7 @@ export default  function App() {
             <Button title={"Sign in With Google"} onPress={()=> promptAsync()} />
         </SafeAreaView>
     )
-}
+}*/
 
 /*import React from 'react';
 import { View, Text, Button, Modal, StyleSheet } from 'react-native';

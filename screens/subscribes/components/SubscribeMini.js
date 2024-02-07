@@ -1,5 +1,4 @@
 import {Image, Text, TouchableOpacity, View, StyleSheet} from "react-native";
-import {sub} from "@shopify/react-native-skia";
 import {fontStyles} from "../../../styles/font";
 import {useNavigation} from "@react-navigation/native";
 
