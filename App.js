@@ -121,10 +121,10 @@ const App = () => {
             style={styles.container}
             contentContainerStyle={styles.contentContainer}
         >
-            <Text style={[styles.text, { fontWeight: 'bold', textTransform: 'uppercase' }]}>
+            {/*<Text style={[styles.text, { fontWeight: 'bold', textTransform: 'uppercase' }]}>
                 Examples
             </Text>
-             ShouldPlay (autoplay) is true only in the first example
+             <Text>ShouldPlay (autoplay) is true only in the first example</Text>
             <Text style={styles.text}>Basic</Text>
             <VideoPlayer
                 videoProps={{
@@ -134,9 +134,9 @@ const App = () => {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
                     },
                 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>Local file</Text>
+            {/*<Text style={styles.text}>Local file</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -144,9 +144,9 @@ const App = () => {
                     source: require('./local.mp4'),
                 }}
                 style={{ height: 160 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>Only video without controls</Text>
+            {/*<Text style={styles.text}>Only video without controls</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -163,9 +163,9 @@ const App = () => {
                 }}
                 timeVisible={false}
                 style={{ height: 160 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>Some styling</Text>
+            {/*<Text style={styles.text}>Some styling</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -179,9 +179,9 @@ const App = () => {
                     controlsBackgroundColor: 'red',
                     height: 200,
                 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>With custom icons</Text>
+            {/*<Text style={styles.text}>With custom icons</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -195,9 +195,9 @@ const App = () => {
                     pause: <Text style={{ color: '#FFF' }}>PAUSE</Text>,
                 }}
                 style={{ height: 160 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>With some more styling</Text>
+            {/*<Text style={styles.text}>With some more styling</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -212,9 +212,9 @@ const App = () => {
                     videoBackgroundColor: 'yellow',
                     controlsBackgroundColor: 'blue',
                 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>With Mute</Text>
+            {/*<Text style={styles.text}>With Mute</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -230,9 +230,9 @@ const App = () => {
                     isMute,
                 }}
                 style={{ height: 160 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>Fullscren icon hidden</Text>
+            {/*<Text style={styles.text}>Fullscren icon hidden</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -245,9 +245,9 @@ const App = () => {
                     visible: false,
                 }}
                 style={{ height: 160 }}
-            />
+            />*/}
 
-            <Text style={styles.text}>Ref - clicking on Enter/Exit fullscreen changes playing</Text>
+            {/*<Text style={styles.text}>Ref - clicking on Enter/Exit fullscreen changes playing</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -273,16 +273,17 @@ const App = () => {
                     inFullscreen,
                 }}
                 style={{ height: 160 }}
-            />
+            />*/}
 
             <Text style={styles.text}>Fullscren</Text>
             <VideoPlayer
                 videoProps={{
-                    shouldPlay: false,
+                    shouldPlay: true,
                     resizeMode: ResizeMode.CONTAIN,
-                    source: {
+                    /*source: {
                         uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                    },
+                    },*/
+                    source: require('./local.mp4'),
                     ref: refVideo2,
                 }}
                 fullscreen={{
@@ -308,7 +309,7 @@ const App = () => {
                 }}
             />
 
-            <Text style={styles.text}>Custom title</Text>
+            {/*<Text style={styles.text}>Custom title</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
@@ -321,7 +322,7 @@ const App = () => {
                     videoBackgroundColor: 'black',
                 }}
                 header={<Text style={{ color: '#FFF' }}>Custom title</Text>}
-            />
+            />*/}
         </ScrollView>
     )
 }
@@ -343,3 +344,55 @@ const styles = StyleSheet.create({
 })
 
 export default App
+
+
+/*import * as React from 'react';
+import { View, StyleSheet, Button } from 'react-native';
+import { Video, ResizeMode } from 'expo-av';
+
+export default function App() {
+    const video = React.useRef(null);
+    const [status, setStatus] = React.useState({});
+    return (
+        <View style={styles.container}>
+            <Video
+                ref={video}
+                style={styles.video}
+                source={{
+                    uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                }}
+                useNativeControls
+                resizeMode={ResizeMode.CONTAIN}
+                isLooping
+                onPlaybackStatusUpdate={status => setStatus(() => status)}
+            />
+            <View style={styles.buttons}>
+                <Button
+                    title={status.isPlaying ? 'Pause' : 'Play'}
+                    onPress={() =>
+                        status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+                    }
+                />
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#ecf0f1',
+    },
+    video: {
+        alignSelf: 'center',
+        width: 320,
+        height: 200,
+    },
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});*/
+
