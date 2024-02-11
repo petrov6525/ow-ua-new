@@ -2,9 +2,14 @@ import * as React from 'react';
 import MainLayout from "../layouts/mainLayout";
 import FontLoader from "../login/components/FontLoader";
 import {fontStyles} from "../../styles/font";
-import {Text} from "react-native";
+import {ScrollView, Text, StyleSheet, SafeAreaView, View, TouchableOpacity} from "react-native";
 import {useSelector} from "react-redux";
 import {NeedAuth} from "../needAuth/NeedAuth";
+import {HistoryHorizontal} from "./components/HistoryHorizontal";
+import {LikedHorizontal} from "./components/LikedHorizontal";
+import {PlaylistsHorizontal} from "./components/PlaylistsHorizontal";
+import {MyChannelHorizontal} from "./components/MyChannelHorizontal";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function You() {
     const isAuth = useSelector(
@@ -19,8 +24,31 @@ export default function You() {
     return (
         <MainLayout>
             <FontLoader>
-                <Text style={[fontStyles.noirProRegular, {color: 'white', fontSize: 20}]}>You</Text>
+                <SafeAreaView style={styles.view}>
+                    <ScrollView style={styles.scroll}>
+                        <View style={{flexDirection: 'row', position: 'relative', marginBottom: 10}}>
+                            <TouchableOpacity style={{position: 'absolute', top: 10, right: 10}}>
+                                <MaterialCommunityIcons name="account-cog-outline" color={'rgba(255,255,255,0.5)'} size={30}/>
+                            </TouchableOpacity>
+                        </View>
+                        <HistoryHorizontal />
+                        <LikedHorizontal />
+                        <PlaylistsHorizontal />
+                        <MyChannelHorizontal />
+                    </ScrollView>
+                </SafeAreaView>
             </FontLoader>
         </MainLayout>
     )
 }
+
+const styles = StyleSheet.create({
+    scroll: {
+        height: '100%',
+    },
+    view: {
+        flex: 1,
+        width: '100%',
+        paddingBottom: 65
+    }
+})

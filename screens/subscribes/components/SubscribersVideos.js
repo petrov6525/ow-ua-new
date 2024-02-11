@@ -1,4 +1,4 @@
-import {Video} from "../../home/components/Video";
+import {Video} from "../../home/components/VideoComponent";
 
 
 export const SubscribersVideos = () => {

@@ -50,7 +50,7 @@ export default function Subscribes() {
                     stickyHeaderIndices={[0]}
                 >
                     <Header/>
-                    <SubscribersVideos />
+                    {/*<SubscribersVideos />*/}
                 </ScrollView>
 
             </FontLoader>

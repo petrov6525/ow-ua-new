@@ -5,7 +5,7 @@ import {fontStyles} from "../../../styles/font";
 export const Details = () => {
     return(
         <TouchableOpacity style={styles.details}>
-            <Text style={styles.text}>...</Text>
+            <Text style={styles.text}>+</Text>
         </TouchableOpacity>
     )
 }

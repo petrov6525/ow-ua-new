@@ -1,9 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
-    isAuth: true,
+    // isAuth: true,
+    isAuth: false,
     isRequest: false,
-    registerEmail: ""
+    registerEmail: "",
+    accessToken: "",
+    refreshToken: "",
 }
 
 const authSlice = createSlice({
@@ -21,6 +26,13 @@ const authSlice = createSlice({
         },
         setRegisterEmail: (state, action) => {
             state.registerEmail = action.payload;
+        },
+        logout: (state) => {
+            state.isAuth = false;
+            state.accessToken = null;
+        },
+        setAccessToken: (state, action) => {
+            state.accessToken = action.payload
         }
     }
 })
@@ -29,6 +41,8 @@ export const {
     login,
     setIsAuth,
     setIsRequest,
-    setRegisterEmail
+    setRegisterEmail,
+    logout,
+    setAccessToken
 } = authSlice.actions;
 export default authSlice.reducer;

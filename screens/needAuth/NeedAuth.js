@@ -3,12 +3,15 @@ import {BackHandler, SafeAreaView, Text, TouchableOpacity, StyleSheet} from "rea
 import {fontStyles} from "../../styles/font";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {setIsAuth} from "../../store/slice/auth/authSlice";
 
 
 export const NeedAuth = ({message}) => {
     const route = useRoute();
     const {navigate, goBack} = useNavigation();
     const params = route.params;
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!params?.text) {
@@ -29,6 +32,7 @@ export const NeedAuth = ({message}) => {
     }
 
     const authPressHanlder = () => {
+        // dispatch(setIsAuth(true));
         navigate('Login');
     }
 

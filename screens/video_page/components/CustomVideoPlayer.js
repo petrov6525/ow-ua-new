@@ -1,6 +1,6 @@
 import {ResizeMode} from "expo-av";
 import VideoPlayer from "expo-video-player";
-import {BackHandler, Dimensions, StyleSheet, Text, TouchableOpacity} from "react-native";
+import {BackHandler, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {fontStyles} from "../../../styles/font";
 import * as NavigationBar from "expo-navigation-bar";
@@ -11,11 +11,17 @@ import {useEffect, useState} from "react";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setIsFullScreen} from "../../../store/slice/videoSlice";
+import {getWatchInfo} from "../../../helpers/videoInfoHelper";
+import {useGetViewsCountQuery} from "../../../api/video/VideoApi";
 
 
-export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
+export const CustomVideoPlayer = ({videoParams}) => {
     const navigation = useNavigation();
     const video = React.useRef(null);
+    const [inFullScreen, setInFullScreen] = useState(false);
+    const {data: viewsCount} = useGetViewsCountQuery(videoParams.video.id);
+
+    const watchInfo = viewsCount ?? 0;
 
     const videoWidth = inFullScreen ? Dimensions.get('screen').height : Dimensions.get('screen').width;
     // const videoWidth = 500;
@@ -29,7 +35,6 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT)
         video.current.setStatusAsync({
             // shouldPlay: true,
-
         })
     }
 
@@ -54,6 +59,15 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
 
     const handleBackPress = () => {
         return true;
+    }
+
+    const handleVideoPage = () => {
+        navigation.goBack();
+        navigation.navigate('VideoPage');
+    }
+
+    const handleChannelPage = () => {
+        navigation.navigate('ChannelPage');
     }
     const ToHome = () => {
         return (
@@ -85,22 +99,33 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
             inFullScreen ? <VideoTitle/> : <ToHome/>
         )
     }
+
+    const videoData = {
+        videoLogo: require('../../../assets/video_img.png'),
+        title: "Video Title",
+        channelLogo: require('../../../assets/channel_profile_logo.png'),
+        channelTitle: "Channel title",
+        time: "3:46",
+        watchInfo: "2 млн переглядів 3 роки тому",
+        id: 1
+    }
+    console.log(videoParams.video.user);
     return(
         <>
             <VideoPlayer
                 header={<VideoHeader/>}
                 videoProps={{
-                    shouldPlay: true,
+                    shouldPlay: false,
                     resizeMode: ResizeMode.CONTAIN,
                     /*source: {
-                        uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                        uri: videoParams.video.uri
                     },*/
-                    usePoster: true,
-                    posterSource: require('../../../assets/video_img.png'),
-                    posterStyle:{width: videoWidth, height: videoHeight},
-                    source: require('../../../assets/video/video_1.mp4'),
+                    source: require('../../../local.mp4'),
+                    // usePoster: true,
+                    // posterSource: require('../../../assets/video_img.png'),
+                    // posterStyle:{width: videoWidth, height: videoHeight},
                     ref: video,
-                    isMuted: true,
+                    isMuted: false,
                 }}
                 fullscreen={{
                     inFullscreen: inFullScreen,
@@ -114,6 +139,18 @@ export const CustomVideoPlayer = ({inFullScreen, setInFullScreen}) => {
 
                 }}
             />
+            <View style={{padding: 15, flexDirection: 'row'}}>
+                <Image source={{uri: videoParams.video.user.photoUrl}} style={{width: 60, height: 60, marginRight: 15, borderRadius: 30}}
+                       onTouchEnd={handleChannelPage}/>
+                <View onTouchEnd={handleVideoPage}>
+                    <Text style={[fontStyles.noirProRegular, {fontSize: 17}]}>{videoParams.video.title}</Text>
+                    <Text style={[fontStyles.noirProRegular, {
+                        fontSize: 15,
+                        color: '#87898D'
+                    }]}>{videoParams.video.user.displayName}</Text>
+                    <Text style={[fontStyles.noirProRegular, {fontSize: 13, color: '#87898D'}]}>{watchInfo} переглядів</Text>
+                </View>
+            </View>
         </>
 
     )

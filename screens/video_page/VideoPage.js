@@ -6,7 +6,7 @@ import {
     Text
 } from "react-native";
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import React from "react";
 import {CustomVideoPlayer} from "./components/CustomVideoPlayer";
 import {Likes} from "./components/Likes";
@@ -16,37 +16,40 @@ import {Comments} from "./components/Comments";
 import {RecommendedVideos} from "./components/RecommendedVideos";
 import {fontStyles} from "../../styles/font";
 import {useSelector} from "react-redux";
+import {isVideoOwner} from "../../helpers/videoInfoHelper";
+import {Edit} from "./components/Edit";
+import {useGetVideoQuery} from "../../api/video/VideoApi";
 
 export const VideoPage = () => {
     const route = useRoute();
-    const { navigate } = useNavigation();
-    const {videoParams} = route.params;
+    const {navigate} = useNavigation();
+    const videoParams = route.params;
     const [status, setStatus] = React.useState({});
-    const [inFullScreen, setInFullScreen] = useState(false);
-    const isAuth = useSelector(
-        (state) => state.authReducer.isAuth
-    );
+    const isAuth = useSelector((state) => state.authReducer.isAuth);
+    const {refetch} = useGetVideoQuery(videoParams.video.id);
 
+    useEffect(() => {
+        refetch();
+    }, []);
 
-
-
+    const isOwner = isVideoOwner(videoParams.video.user);
     const Panel = () => {
         return (
             <View style={styles.panel}>
-                <Likes/>
+                <Likes videoId={videoParams.video.id}/>
                 <Details/>
-                <Subscribe/>
+                {isOwner ? <Edit/> :
+                    <Subscribe/>}
             </View>
         )
     }
 
 
     return (
-        <SafeAreaView style={{backgroundColor: '#0C0F14'}}>
-            <View
-            >
+        <SafeAreaView style={{backgroundColor: '#0C0F14', flex: 1}}>
+            <View>
                 {/*<DraggableVideo eventHandler={toHomeHandle} isDraggable={!inFullScreen}>*/}
-                <CustomVideoPlayer inFullScreen={inFullScreen} setInFullScreen={setInFullScreen}/>
+                <CustomVideoPlayer videoParams={videoParams}/>
                 {/*</DraggableVideo>*/}
                 <ScrollView
                     horizontal={false}
@@ -54,12 +57,13 @@ export const VideoPage = () => {
                     stickyHeaderIndices={[0]}
                     style={{marginBottom: 465}}
                 >
+
                     <View style={{backgroundColor: '#0C0F14'}}>
                         <Text style={styles.videoTitle}>Video Title</Text>
                         <Panel/>
-                        <Comments/>
+                        <Comments videoId={videoParams.video.id}/>
                     </View>
-                    <RecommendedVideos />
+                    {/*<RecommendedVideos />*/}
                 </ScrollView>
             </View>
         </SafeAreaView>

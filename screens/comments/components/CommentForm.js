@@ -4,18 +4,39 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {useEffect, useRef, useState} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useSelector} from "react-redux";
+import {useAddCommentMutation} from "../../../api/video/GradeApi";
 
 
-export const CommentForm = ({onPress}) => {
+export const CommentForm = ({onPress, videoId}) => {
     const inputRef = useRef(null);
-    const isAuth = useSelector(
-        (state) => state.authReducer.isAuth
-    );
+    const isAuth = useSelector((state) => state.authReducer.isAuth);
+    const [text, setText] = useState("");
+
+    const [addComment] = useAddCommentMutation();
+
+    const handleSend = async () => {
+        if (text.trim() === "") return;
+        try {
+            await addComment({
+                text: text,
+                video_id: videoId
+            }).unwrap();
+            setText("");
+        } catch (e) {
+            console.log("Error: ", e.getMessage());
+        }
+    }
 
     return (
         <View style={styles.box}>
-            {isAuth ? <TextInput style={styles.input} multiline={true} focusable={true} autoFocus={false}
-                                 ref={inputRef}
+            {isAuth ? <TextInput
+                    style={styles.input}
+                    multiline={true}
+                    focusable={true}
+                    autoFocus={false}
+                    ref={inputRef}
+                    value={text}
+                    onChangeText={(text)=>setText(text)}
             >
 
             </TextInput>
@@ -25,7 +46,7 @@ export const CommentForm = ({onPress}) => {
             }
 
             <View style={styles.arrowBox}>
-                <TouchableOpacity style={styles.arrow} >
+                <TouchableOpacity style={styles.arrow} onPress={handleSend} >
                     <MaterialCommunityIcons name="arch" color={'rgba(255,255,255,0.8)'} size={30} />
                 </TouchableOpacity>
             </View>
@@ -36,7 +57,7 @@ export const CommentForm = ({onPress}) => {
 const styles = StyleSheet.create({
     box: {
         position: 'absolute',
-        bottom: 2,
+        bottom: 0,
         left: 0,
         right: 0,
         flexDirection: 'row',

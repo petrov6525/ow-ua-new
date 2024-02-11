@@ -1,15 +1,72 @@
 import BaseNavigation from "./screens/navigations/BaseNavigation";
 import 'react-native-gesture-handler';
-import {Provider} from "react-redux";
+import {Provider, useDispatch} from "react-redux";
 import {store} from "./store/store";
+import {useGetAllCategoriesQuery} from "./api/video/VideoApi";
+import {View} from "react-native";
+import {useEffect} from "react";
+import axiosInstance from "./routing/axios";
+import AuthService from "./services/authService";
+import {Video} from "expo-av";
 
 export default function App() {
   return (
       <Provider store={store}>
           <BaseNavigation />
+          {/*<Test />*/}
       </Provider>
   );
 }
+
+const Test = () => {
+    const { data, error } = useGetAllCategoriesQuery();
+
+    const dispatch = useDispatch();
+    const authService = new AuthService(dispatch);
+
+    useEffect(() => {
+        authService.IsAuth();
+    }, []);
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
+
+    useEffect(() => {
+        console.log(error);
+    }, [error]);
+
+    const fetchData = async () => {
+        try {
+            // const response = await axiosInstance('')
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    return(
+        <View>
+            <Video
+                source={{uri: "https://firebasestorage.googleapis.com/v0/b/ow-ua-eb53f.appspot.com/o/Videos%2F1707654123495?alt=media&token=d22d6660-90aa-4754-8102-55d508662442"}}
+                style={{
+                    width: 100,
+                    height: 250,
+                    borderRadius: 6,
+                    backgroundColor: 'black'
+                }}
+                resizeMode='contain'
+                isMuted={true}
+                shouldPlay={false}
+            />
+        </View>
+    )
+}
+
 
 
 

@@ -4,13 +4,20 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {useNavigation} from "@react-navigation/native";
 import {useSelector} from "react-redux";
 import {NeedAuth} from "../../needAuth/NeedAuth";
+import {useGetDisLikesQuery, useGetLikesQuery} from "../../../api/video/GradeApi";
+import {useEffect} from "react";
 
 
-export const Likes = () => {
+export const Likes = ({videoId}) => {
     const { navigate } = useNavigation();
-    const isAuth = useSelector(
-        (state) => state.authReducer.isAuth
-    );
+    const isAuth = useSelector((state) => state.authReducer.isAuth);
+    const {data: likes, refetch: likesRefetch} = useGetLikesQuery(videoId);
+    const {data: dislikes, refetch: dislikesRefetch} = useGetDisLikesQuery(videoId);
+
+    useEffect(() => {
+        likesRefetch();
+        dislikesRefetch();
+    }, [likes, dislikes]);
 
     const pressHandle = () => {
         if (!isAuth) {
@@ -23,14 +30,14 @@ export const Likes = () => {
                 <TouchableOpacity style={styles.like} onPress={pressHandle}>
                     <Image source={require('../../../assets/icons/like.png')} style={{width: 20, height: 17}}/>
                 </TouchableOpacity>
-                <Text style={styles.text}>44 тис</Text>
+                <Text style={styles.text}>{likes}</Text>
             </View>
 
             <View>
                 <TouchableOpacity style={styles.dislike} onPress={pressHandle}>
                     <Image source={require('../../../assets/icons/dislike.png')} style={{width: 20, height: 17}}/>
                 </TouchableOpacity>
-                <Text style={styles.text}>12 тис</Text>
+                <Text style={styles.text}>{dislikes}</Text>
             </View>
         </View>
     )

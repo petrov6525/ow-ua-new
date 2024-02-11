@@ -12,23 +12,28 @@ import {googleConfig} from "../../config";
 import GoogleAuthService from "../../services/googleAuthService";
 import LoginFormErrors from "../components/loginFormErrors";
 import {clearErrors} from "../../store/slice/modal/modalSlice";
+import {useNavigation} from "@react-navigation/native";
 
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function Login({navigation}) {
+export default function Login() {
     const [request, response, promptAsync] = Google.useAuthRequest(googleConfig);
     const dispatch = useDispatch();
     const googleAuthService = new GoogleAuthService(dispatch);
 
     const [modalVisible, setModalVisible] = React.useState(false);
     const isRequest = useSelector((state)=> state.authReducer.isRequest);
+    const navigation = useNavigation();
 
     React.useEffect( ()=>{
         dispatch(clearErrors());
         const login = async(response)=> {
             const result = await googleAuthService.handleSignInWithGoogle(response);
             setModalVisible(!result);
+            if (result) {
+                navigation.goBack();
+            }
         }
         login(response);
     }, [response]);
@@ -49,7 +54,7 @@ export default function Login({navigation}) {
                         fontStyles.noirProRegular,
                         {color: 'white', fontSize: 16, marginBottom: 36}
                     ]}>Оберіть варіант входу</Text>
-                    <TouchableOpacity style={[
+                    <TouchableOpacity disabled={isRequest} style={[
                         styles.loginBox,
                         {marginBottom: 16},
                         isRequest ? styles.request : ''

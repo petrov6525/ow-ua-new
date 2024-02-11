@@ -4,8 +4,8 @@ import {fontStyles} from "../../../styles/font";
 
 
 export const SubscribeInfoButton = () => {
-    const [isSubscribed, setIsSubscribed ] = useState(false);
-    const text = isSubscribed ? "Ви підписані" : "Підписатись";
+    const [isSubscribed, setIsSubscribed ] = useState(true);
+    const text = !isSubscribed ? "Ви підписані" : "Підписатись";
     const color= isSubscribed ? '#5A58C9' : 'transparent';
 
     return(

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {setIsAuth, setIsRequest} from "../store/slice/auth/authSlice";
+import {logout, setAccessToken, setIsAuth, setIsRequest} from "../store/slice/auth/authSlice";
 import {addError} from "../store/slice/modal/modalSlice";
 import router from "../routing/router";
 import errorToStringHelper from "../helpers/errorToStringHelper";
@@ -23,13 +23,20 @@ class AuthService {
             return false;
         }
         const refreshToken = JSON.parse(user).refreshToken;
+        // const refreshToken = "lklm";
         const {status, data} = await this.router.ReLogin(refreshToken);
 
         if (status) {
             await AsyncStorage.setItem("@authData", JSON.stringify(data));
+            this.dispatch(setAccessToken(data.accessToken));
         }
 
         return status;
+    }
+
+    async Logout () {
+        await AsyncStorage.removeItem("@authData");
+        this.dispatch(logout());
     }
 
     async LoginWithGoogle(user) {
@@ -37,6 +44,7 @@ class AuthService {
         const {status, data} = await this.router.LoginWithGoogle(user);
         if (status) {
             await AsyncStorage.setItem("@authData", JSON.stringify(data));
+            console.log(data);
         } else {
             this.dispatch(addError(this.errorHelper.getError(data)));
         }

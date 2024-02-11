@@ -7,11 +7,17 @@ import Home from "../home/Home";
 import Subscribes from "../subscribes/Subscribes";
 import Playlists from "../playlists/Playlists";
 import You from "../you/You";
+import {AddVideo} from "../add_video/AddVideo";
+import {useSelector} from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 
 export default function TabNavigation() {
+    const uploadProgress = useSelector(
+        (state) => state.videoReducer.uploadProgress
+    )
+
     return (
         <Tab.Navigator screenOptions={{
             tabBarShowLabel: true,
@@ -52,6 +58,17 @@ export default function TabNavigation() {
                             )
                         }}
             />
+
+            <Tab.Screen name="AddVideo" component={AddVideo}
+                        options={{
+                            tabBarLabel: uploadProgress > 0 ? `${uploadProgress}%` : '',
+                            tabBarIcon: ({focused}) => (
+                                <MaterialCommunityIcons
+                                    name="plus-box" color={focused ? '#5A58C9' : 'rgba(255,255,255, 1)'} size={28}/>
+                            )
+                        }}
+            />
+
 
             <Tab.Screen name="Playlists" component={Playlists}
                         options={{

@@ -1,21 +1,27 @@
 import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../../styles/font";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {CommentsModalPage} from "../../comments/CommentsModalPage";
+import {useNavigation} from "@react-navigation/native";
+import {useGetCommentsQuery} from "../../../api/video/GradeApi";
 
 
-export const Comments = () => {
+export const Comments = ({videoId}) => {
+    const navigation = useNavigation();
+    const {data, refetch} = useGetCommentsQuery(videoId);
+    const count = data?.length ?? 0;
 
-    const [modalVisible, setModalVisible] = useState(false);
+    useEffect(() => {
+        refetch();
+    }, []);
 
     return (
         <>
-            <CommentsModalPage modalVisible={modalVisible} setModalVisible={setModalVisible} />
             <TouchableOpacity style={styles.container}
-                              onPress={()=>{setModalVisible(true)}}
+                              onPress={()=>navigation.navigate('CommentsModalPage', {videoId: videoId})}
             >
                 <View style={styles.commentHeader}>
-                        <Text style={styles.text}>Коментарі <Text style={styles.commentsCount}>1,2 тис.</Text></Text>
+                        <Text style={styles.text}>Коментарі <Text style={styles.commentsCount}>{count}</Text></Text>
                 </View>
             </TouchableOpacity>
         </>

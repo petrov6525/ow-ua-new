@@ -3,14 +3,23 @@ import {SafeAreaView, StatusBar, StyleSheet, View} from "react-native";
 import LayoutBlur from "../login/components/LayoutBlur";
 import * as NavigationBar from 'expo-navigation-bar';
 import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import AuthService from "../../services/authService";
 
 export default function MainLayout({children}) {
 
+    const dispatch = useDispatch();
+    const authService = new AuthService(dispatch);
+    const isAuth = useSelector(
+        (state) => state.authReducer.isAuth
+    );
+
     useEffect(() => {
         NavigationBar.setBackgroundColorAsync('#0C0F14');
+        authService.IsAuth();
     }, []);
 
-    return(
+    return (
         <View style={{flex: 1, backgroundColor: '#10121D'}}>
             <LayoutBlur/>
             <StatusBar

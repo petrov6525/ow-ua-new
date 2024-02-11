@@ -4,6 +4,9 @@ import authReducer from "../store/slice/auth/authSlice";
 import modalReducer from "../store/slice/modal/modalSlice";
 import mainNavigateReducer from "./slice/navigate/mainNavigateSlice";
 import videoReducer from "./slice/videoSlice";
+import {VideoApi} from "../api/video/VideoApi";
+import { setupListeners } from '@reduxjs/toolkit/query';
+import {GradeApi} from "../api/video/GradeApi";
 
 export const store = configureStore({
     reducer: {
@@ -11,8 +14,16 @@ export const store = configureStore({
         authReducer: authReducer,
         modalReducer: modalReducer,
         mainNavigateReducer: mainNavigateReducer,
-        videoReducer: videoReducer
-    }
-})
+        videoReducer: videoReducer,
+        [VideoApi.reducerPath]: VideoApi.reducer,
+        [GradeApi.reducerPath]: GradeApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .concat(VideoApi.middleware)
+            .concat(GradeApi.middleware)
+});
+
+setupListeners(store.dispatch);
 
 export default {store};

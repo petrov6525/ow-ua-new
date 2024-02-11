@@ -1,80 +1,76 @@
 import {
     BackHandler,
-    Button, Image,
-    Modal,
     SafeAreaView,
-    ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
-    View
+    View,
+    ActivityIndicator, FlatList
 } from "react-native";
 import {fontStyles} from "../../styles/font";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import {useEffect} from "react";
-import * as NavigationBar from "expo-navigation-bar";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {CommentEditButton} from "./components/CommentEditButton";
 import {Comment} from "./components/Comment";
 import {CommentForm} from "./components/CommentForm";
 import {useSelector} from "react-redux";
+import {useGetCommentsQuery} from "../../api/video/GradeApi";
 
 
 
 const comment = {
     text: "This is one of the most amazing AMV's I've ever watched! This is one of the most amazing AMV's I've ever watched! This is one of the most amazing AMV's I've ever watched!"
 }
-export const CommentsModalPage = ({modalVisible, setModalVisible}) => {
+export const CommentsModalPage = () => {
     const {navigate, goBack} = useNavigation();
-    const isAuth = useSelector(
-        (state) => state.authReducer.isAuth
-    );
+    const route = useRoute();
+    const {videoId} = route.params;
+    const {data, refetch, isLoading} = useGetCommentsQuery(videoId);
+    const count = data?.length ?? 0;
+    const isAuth = useSelector((state) => state.authReducer.isAuth);
+
+
+    useEffect(() => {
+        refetch();
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            handleBackPress
+        );
+
+        return () => {
+            backHandler.remove();
+        };
+    }, []);
+
+
+    const handleBackPress = () => {
+        goBack();
+    }
 
     const focusHandle = () => {
         if (!isAuth) {
-            setModalVisible(false);
             navigate('NeedAuth', {text: "Авторизуйтесь щоб поставити оцінку відео"})
         }
     }
 
     return (
-        <Modal
-            visible={modalVisible}
-            transparent={true}
-            animationType={'slide'}
-            onRequestClose={() => {
-                setModalVisible(false)
-            }}
-            hardwareAccelerated={true}
-        >
             <SafeAreaView style={{flex: 1, paddingBottom: 35}}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                     <View style={styles.container}
                     >
                         <View style={styles.commentHeader}>
-                            <Text style={styles.text}>Коментарі <Text style={styles.commentsCount}>1,2
-                                тис.</Text></Text>
-                            {/*<CommentEditButton visible={true} />*/}
+                            <Text style={styles.text}>Коментарі <Text style={styles.commentsCount}>{count}</Text></Text>
                         </View>
-                        <ScrollView
-                            style={{marginBottom: 40}}
-                            scrollEnabled={true}
-                        >
-                            <Comment comment={comment} />
-                            <Comment comment={comment} />
-                            <Comment comment={comment} />
-                            <Comment comment={comment} />
-                            <Comment comment={comment} />
-                            <Comment comment={comment} />
-                            <Comment comment={comment} />
-                        </ScrollView>
+                        {isLoading && <ActivityIndicator size={"large"} />}
+                        {data && <FlatList
+                            data={data}
+                            renderItem={({item}) => <Comment comment={item}/>}
+                            refreshing={true}
+                        />}
                     </View>
                 </View>
             </View>
-                <CommentForm onPress={focusHandle} />
+                <CommentForm onPress={focusHandle} videoId={videoId} />
             </SafeAreaView>
-        </Modal>
     )
 }
 
@@ -114,12 +110,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // полупрозрачный фон
+        backgroundColor: 'rgba(0, 0, 0, 0)', // полупрозрачный фон
     },
     modalContent: {
         backgroundColor: '#0C0F14',
         paddingTop: 20,
-        height: '80%', // 80% от высоты экрана
-        width: '100%', // 50% от ширины экрана
+        position: 'absolute',
+        top: 230,
+        bottom: 0,
+        width: '100%',
     }
 })

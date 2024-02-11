@@ -17,6 +17,14 @@ class AsyncStorageService
         }
         return JSON.parse(authData).user;
     }
+
+    async GetAccessToken() {
+        const authData = await AsyncStorage.getItem("@authData");
+        if (!authData) {
+            return null;
+        }
+        return JSON.parse(authData).accessToken;
+    }
 }
 
 const asyncStorageService = new AsyncStorageService();

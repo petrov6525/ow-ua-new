@@ -4,6 +4,7 @@ import {StyleSheet} from "react-native";
 export const fontStyles = StyleSheet.create({
     noirProBold: {
         fontFamily: 'noir-pro-bold',
+        color: 'white'
     },
     noirProRegular: {
         fontFamily: 'noir-pro-regular',

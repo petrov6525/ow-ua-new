@@ -5,9 +5,12 @@ import {fontStyles} from "../../../styles/font";
 export const Comment = ({comment}) => {
     return (
         <View style={styles.comment}>
-            <Image source={require('../../../assets/channel_profile_logo.png')}
-                   style={{width: 50, height: 50, marginRight: 10}}/>
-            <Text style={styles.commentText}>{comment.text}</Text>
+            <Image source={{uri: comment.user.photoUrl}}
+                   style={{width: 50, height: 50, marginRight: 10, borderRadius: 30}}/>
+            <View>
+                <Text style={styles.userName}>{comment.user.displayName}</Text>
+                <Text style={styles.commentText}>{comment.text}</Text>
+            </View>
         </View>
     )
 }
@@ -24,4 +27,9 @@ const styles = StyleSheet.create({
         ...fontStyles.noirProRegular,
         marginRight: 20
     },
+    userName: {
+        ...fontStyles.noirProRegular,
+        fontSize: 12,
+        color: 'rgba(255,255,255,0.53)'
+    }
 })

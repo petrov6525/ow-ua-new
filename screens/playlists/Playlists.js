@@ -2,11 +2,12 @@ import * as React from 'react';
 import FontLoader from "../login/components/FontLoader";
 import {fontStyles} from "../../styles/font";
 import MainLayout from "../layouts/mainLayout";
-import {SafeAreaView, ScrollView, Text} from "react-native";
+import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import {useSelector} from "react-redux";
 import {NeedAuth} from "../needAuth/NeedAuth";
 import {SubscribeMini} from "../subscribes/components/SubscribeMini";
 import {Playlist} from "./components/Playlist";
+import {useEffect} from "react";
 
 
 
@@ -26,17 +27,30 @@ export default function Playlists() {
             <NeedAuth message={"Авторизуйтесь щоб переглянути плейлісти"} />
         )
     }
+    
 
     return (
         <MainLayout>
             <FontLoader>
-                <SafeAreaView style={{paddingBottom: 75, width: '100%'}}>
+                <SafeAreaView style={{paddingBottom: 65, width: '100%'}}>
                     <ScrollView
-                        style={{margin: 20}}
+                        style={{height: '100%'}}
                         scrollEventThrottle={5}
                     >
-                        <Playlist playlist={playList} />
+                        <Playlist playlist={1} />
+                        <Playlist playlist={2} />
+                        <Playlist playlist={3} />
+                        <Playlist playlist={4} />
+                        <Playlist playlist={5} />
+                        <Playlist playlist={6} />
+                        <Playlist playlist={7} />
+                        <Playlist playlist={8} />
+                        <Playlist playlist={9} />
+                        <Playlist playlist={10} />
                     </ScrollView>
+                    <View>
+
+                    </View>
                 </SafeAreaView>
             </FontLoader>
         </MainLayout>
