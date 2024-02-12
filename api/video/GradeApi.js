@@ -24,6 +24,26 @@ export const GradeApi = createApi({
                         method: 'POST'
                     }),
                     invalidatesTags: ['Comments']
+                }),
+                isLiked: builder.query({
+                    query: (videoId) => ROUTES.IS_LIKED + `?videoId=${videoId}`
+                }),
+                isDisLiked: builder.query({
+                    query: (videoId) => ROUTES.IS_DISLIKED + `?videoId=${videoId}`
+                }),
+                sendLike: builder.mutation({
+                    query: (like) => ({
+                        url: ROUTES.SEND_LIKE,
+                        method: 'POST',
+                        body: like
+                    })
+                }),
+                sendDisLike: builder.mutation({
+                    query: (like) => ({
+                        url: ROUTES.SEND_DISLIKE,
+                        method: 'POST',
+                        body: like
+                    })
                 })
             }),
         }
@@ -35,4 +55,8 @@ export const {
     useGetDisLikesQuery,
     useGetCommentsQuery,
     useAddCommentMutation,
+    useIsLikedQuery,
+    useIsDisLikedQuery,
+    useSendLikeMutation,
+    useSendDisLikeMutation,
 } = GradeApi;

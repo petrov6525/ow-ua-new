@@ -109,7 +109,7 @@ export const CustomVideoPlayer = ({videoParams}) => {
         watchInfo: "2 млн переглядів 3 роки тому",
         id: 1
     }
-    console.log(videoParams.video.user);
+
     return(
         <>
             <VideoPlayer

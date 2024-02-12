@@ -11,5 +11,9 @@ export const ROUTES = {
     GET_VIEWS: '/grade/count_watched',
     ADD_COMMENT: '/comment/add-comment',
     ADD_LIKE: '/grade/like',
-    GET_VIDEO: '/video/'
+    GET_VIDEO: '/video/',
+    IS_LIKED: '/grade/liked',
+    IS_DISLIKED: '/grade/disliked',
+    SEND_LIKE: '/grade/like',
+    SEND_DISLIKE: '/grade/dislike',
 };
