@@ -15,7 +15,6 @@ export const VideoApi = createApi({
                 }),
                 getAllVideo: builder.query({
                     query: () => ROUTES.ALL_VIDEO,
-                    invalidatesTags: ['ViewsCount']
                 }),
                 getVideo: builder.query({
                     query: (videoId) => ROUTES.GET_VIDEO + videoId,
