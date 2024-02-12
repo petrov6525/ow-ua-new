@@ -16,4 +16,10 @@ export const ROUTES = {
     IS_DISLIKED: '/grade/disliked',
     SEND_LIKE: '/grade/like',
     SEND_DISLIKE: '/grade/dislike',
+    IS_SUBSCRIBED: '/grade/subscribed',
+    TOGGLE_SUBSCRIPTION: '/subs/toggle-subscription',
+    CREATE_PLAYLIST: '/playlist/create-playlist',
+    ALL_PLAYLISTS: '/playlist/user-playlists',
+    ALL_PLAYLISTS_FOR_VIDEO: '/playlist/for-video',
+    ADD_VIDEO_TO_PLAYLIST: '/list_video/add-video-playlist',
 };

@@ -10,11 +10,11 @@ import {LikedHorizontal} from "./components/LikedHorizontal";
 import {PlaylistsHorizontal} from "./components/PlaylistsHorizontal";
 import {MyChannelHorizontal} from "./components/MyChannelHorizontal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {useNavigation} from "@react-navigation/native";
 
 export default function You() {
-    const isAuth = useSelector(
-        (state) => state.authReducer.isAuth
-    );
+    const isAuth = useSelector((state) => state.authReducer.isAuth);
+    const navigation = useNavigation();
 
     if (!isAuth) {
         return (
@@ -27,7 +27,10 @@ export default function You() {
                 <SafeAreaView style={styles.view}>
                     <ScrollView style={styles.scroll}>
                         <View style={{flexDirection: 'row', position: 'relative', marginBottom: 10}}>
-                            <TouchableOpacity style={{position: 'absolute', top: 10, right: 10}}>
+                            <TouchableOpacity
+                                style={{position: 'absolute', top: 10, right: 10}}
+                                onPress={()=>navigation.navigate('ProfileSettings')}
+                            >
                                 <MaterialCommunityIcons name="account-cog-outline" color={'rgba(255,255,255,0.5)'} size={30}/>
                             </TouchableOpacity>
                         </View>

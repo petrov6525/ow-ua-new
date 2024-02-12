@@ -7,6 +7,7 @@ import videoReducer from "./slice/videoSlice";
 import {VideoApi} from "../api/video/VideoApi";
 import { setupListeners } from '@reduxjs/toolkit/query';
 import {GradeApi} from "../api/video/GradeApi";
+import {PlaylistApi} from "../api/video/PlaylistApi";
 
 export const store = configureStore({
     reducer: {
@@ -17,11 +18,13 @@ export const store = configureStore({
         videoReducer: videoReducer,
         [VideoApi.reducerPath]: VideoApi.reducer,
         [GradeApi.reducerPath]: GradeApi.reducer,
+        [PlaylistApi.reducerPath]: PlaylistApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(VideoApi.middleware)
             .concat(GradeApi.middleware)
+            .concat(PlaylistApi.middleware)
 });
 
 setupListeners(store.dispatch);

@@ -30,6 +30,7 @@ const authSlice = createSlice({
         logout: (state) => {
             state.isAuth = false;
             state.accessToken = null;
+            state.refreshToken = null;
         },
         setAccessToken: (state, action) => {
             state.accessToken = action.payload

@@ -1,3 +1,4 @@
+
 import BaseNavigation from "./screens/navigations/BaseNavigation";
 import 'react-native-gesture-handler';
 import {Provider, useDispatch} from "react-redux";
@@ -7,7 +8,9 @@ import {View} from "react-native";
 import {useEffect} from "react";
 import axiosInstance from "./routing/axios";
 import AuthService from "./services/authService";
-import {Video} from "expo-av";
+import {ResizeMode, Video} from "expo-av";
+import VideoPlayer from "expo-video-player";
+import * as React from 'react';
 
 export default function App() {
   return (
@@ -49,9 +52,40 @@ const Test = () => {
         fetchData();
     }, []);
 
+    const video = React.useRef(null);
+
     return(
         <View>
-            <Video
+            <VideoPlayer
+                // header={<VideoHeader/>}
+                videoProps={{
+                    shouldPlay: false,
+                    resizeMode: ResizeMode.CONTAIN,
+                    /*source: {
+                        uri: videoParams.video.uri
+                    },*/
+                    source: require('./local.mp4'),
+                    // usePoster: true,
+                    // posterSource: require('../../../assets/video_img.png'),
+                    // posterStyle:{width: videoWidth, height: videoHeight},
+                    ref: video,
+                    isMuted: false,
+                }}
+                fullscreen={{
+                    /*inFullscreen: inFullScreen,
+                    enterFullscreen: enterFullScreen,
+                    exitFullscreen: exitFullScreen*/
+                }}
+                style={{
+                    // videoBackgroundColor: 'black',
+                    // height: videoHeight,
+                    // width: videoWidth,
+                    width: 300,
+                    height: 150
+
+                }}
+            />
+            {/*<Video
                 source={{uri: "https://firebasestorage.googleapis.com/v0/b/ow-ua-eb53f.appspot.com/o/Videos%2F1707654123495?alt=media&token=d22d6660-90aa-4754-8102-55d508662442"}}
                 style={{
                     width: 100,
@@ -62,15 +96,15 @@ const Test = () => {
                 resizeMode='contain'
                 isMuted={true}
                 shouldPlay={false}
-            />
+            />*/}
         </View>
     )
 }
 
 
 
-
 /*
+
 import {Button, SafeAreaView} from "react-native";
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
@@ -111,10 +145,10 @@ export default  function App() {
                     shouldPlay: true,
                     isMuted: true,
                     resizeMode: ResizeMode.CONTAIN,
-                    source: {
+                    /!*source: {
                     uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                },
-                    // source: require('./local.mp4'),
+                },*!/
+                    source: require('./local.mp4'),
                     ref: refVideo2,
                 }}
                 fullscreen={{

@@ -5,19 +5,25 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {Video} from "expo-av";
 import {getWatchInfo} from "../../../helpers/videoInfoHelper";
 import {useGetViewsCountQuery} from "../../../api/video/VideoApi";
+import {useSelector} from "react-redux";
 
 
 
 export const VideoComponent = ({video}) => {
     const navigation = useNavigation();
+    const isAuth = useSelector((state) => state.authReducer.isAuth);
     const { params } = useRoute();
     const {data: viewsCount} = useGetViewsCountQuery(video.id);
     const watchInfo = viewsCount ?? 0;
 
 
     const handleVideoPage = () => {
-        // navigation.goBack();
-        navigation.navigate('VideoPage', {video: video});
+        if (!isAuth) {
+            navigation.navigate('NeedAuth', {text: "Авторизуйтесь для перегляду відео", accessBack: false});
+        }
+        else {
+            navigation.navigate('VideoPage', {video: video});
+        }
     }
 
     const handleChannelPage = () => {
@@ -42,7 +48,7 @@ export const VideoComponent = ({video}) => {
                         isMuted={true}
                         shouldPlay={false}
                     />
-                    <Text style={[styles.time, fontStyles.noirProRegular]}>{video.time}</Text>
+                    {/*<Text style={[styles.time, fontStyles.noirProRegular]}>{video.time}</Text>*/}
                 </View>
                 <View style={{padding: 15, flexDirection: 'row'}}>
                     <Image source={{uri: video.user.photoUrl}} style={{width: 60, height: 60, marginRight: 15, borderRadius: 30}}

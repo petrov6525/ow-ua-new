@@ -44,6 +44,16 @@ export const GradeApi = createApi({
                         method: 'POST',
                         body: like
                     })
+                }),
+                isSubscribed: builder.query({
+                    query: (targetUserId) => ROUTES.IS_SUBSCRIBED + `?targetUserId=${targetUserId}`
+                }),
+                toggleSubscribe: builder.mutation({
+                    query: (data) => ({
+                        url: ROUTES.TOGGLE_SUBSCRIPTION,
+                        method: 'POST',
+                        body: data
+                    })
                 })
             }),
         }
@@ -59,4 +69,6 @@ export const {
     useIsDisLikedQuery,
     useSendLikeMutation,
     useSendDisLikeMutation,
+    useIsSubscribedQuery,
+    useToggleSubscribeMutation
 } = GradeApi;

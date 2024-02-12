@@ -1,11 +1,7 @@
 import {
-    BaseQueryFn,
-    FetchArgs,
     fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
-import {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import {BASE_URL} from './constants';
-import {logout} from "../store/slice/auth/authSlice";
 import AuthService from "../services/authService";
 
 const baseQuery = fetchBaseQuery({
@@ -25,7 +21,7 @@ export const customBaseQuery = async (args, api, extraOptions) => {
     if (result.error) {
         if (result.error.status === 401 || result.error.status === 403) {
             const authService = new AuthService(api.dispatch);
-            // authService.Logout();
+            // await authService.Logout();
         }
     }
 

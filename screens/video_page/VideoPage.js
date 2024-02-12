@@ -27,19 +27,26 @@ export const VideoPage = () => {
     const [status, setStatus] = React.useState({});
     const isAuth = useSelector((state) => state.authReducer.isAuth);
     const {refetch} = useGetVideoQuery(videoParams.video.id);
+    const [isOwner,setIsOwner] = useState(false);
 
     useEffect(() => {
         refetch();
+        getOwner(videoParams.video.user);
     }, []);
 
-    const isOwner = isVideoOwner(videoParams.video.user);
+    const getOwner = async (user) => {
+        const res = await isVideoOwner(user);
+        setIsOwner(res);
+    }
+
+
     const Panel = () => {
         return (
             <View style={styles.panel}>
                 <Likes videoId={videoParams.video.id}/>
-                <Details/>
+                <Details videoId={videoParams.video.id}/>
                 {isOwner ? <Edit/> :
-                    <Subscribe/>}
+                    <Subscribe targetUserId={videoParams.video.user.id}/>}
             </View>
         )
     }

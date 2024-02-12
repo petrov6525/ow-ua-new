@@ -117,10 +117,11 @@ export const CustomVideoPlayer = ({videoParams}) => {
                 videoProps={{
                     shouldPlay: false,
                     resizeMode: ResizeMode.CONTAIN,
-                    /*source: {
-                        uri: videoParams.video.uri
-                    },*/
-                    source: require('../../../local.mp4'),
+                    source: {
+                        //uri: videoParams.video.uri
+                        uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+                    },
+                    // source: require('../../../assets/video/video_1.mp4'),
                     // usePoster: true,
                     // posterSource: require('../../../assets/video_img.png'),
                     // posterStyle:{width: videoWidth, height: videoHeight},
@@ -139,6 +140,40 @@ export const CustomVideoPlayer = ({videoParams}) => {
 
                 }}
             />
+
+            {/*<VideoPlayer
+                videoProps={{
+                    shouldPlay: true,
+                    isMuted: true,
+                    resizeMode: ResizeMode.CONTAIN,
+                    /*source: {
+                    uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                },
+                    source: require('../../../local.mp4'),
+                    ref: video,
+                }}
+                fullscreen={{
+                    inFullscreen: inFullScreen,
+                    enterFullscreen: async () => {
+                        setStatusBarHidden(true, 'fade')
+                        setInFullScreen(!inFullScreen)
+                        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT)
+                        video.current.setStatusAsync({
+                            shouldPlay: true,
+                        })
+                    },
+                    exitFullscreen: async () => {
+                        setStatusBarHidden(false, 'fade')
+                        setInFullScreen(!inFullScreen)
+                        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT)
+                    },
+                }}
+                style={{
+                    videoBackgroundColor: 'black',
+                    height: inFullScreen ? Dimensions.get('window').width : 160,
+                    width: inFullScreen ? Dimensions.get('window').height : 320,
+                }}
+            />*/}
             <View style={{padding: 15, flexDirection: 'row'}}>
                 <Image source={{uri: videoParams.video.user.photoUrl}} style={{width: 60, height: 60, marginRight: 15, borderRadius: 30}}
                        onTouchEnd={handleChannelPage}/>

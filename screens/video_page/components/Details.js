@@ -1,10 +1,14 @@
 import {StyleSheet, Text, TouchableOpacity} from "react-native";
 import {fontStyles} from "../../../styles/font";
+import {useNavigation} from "@react-navigation/native";
 
 
-export const Details = () => {
+export const Details = ({videoId}) => {
+    const navigation = useNavigation();
     return(
-        <TouchableOpacity style={styles.details}>
+        <TouchableOpacity style={styles.details}
+        onPress={()=>navigation.navigate('AddToPlaylistPage', {videoId: videoId})}
+        >
             <Text style={styles.text}>+</Text>
         </TouchableOpacity>
     )

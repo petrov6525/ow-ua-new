@@ -20,6 +20,9 @@ import {EditPlayList} from "../playlist_settings/EditPlayList";
 import {YouVideos} from "../you/components/YouVideos";
 import AuthService from "../../services/authService";
 import {useEffect} from "react";
+import {ProfileSettings} from "../profile_settings/ProfileSettings";
+import {AddToPlaylistPage} from "../add_to_playlist_page/AddToPlaylistPage";
+import {AddPlaylistPage} from "../add_playlist_page/AddPlaylistPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -138,6 +141,34 @@ export default function BaseNavigation() {
                         presentation: 'transparentModal'
                     }}
                 />
+
+                <Stack.Screen
+                    name="ProfileSettings"
+                    component={ProfileSettings}
+                    options={{
+                        headerShown: false,
+                        presentation: 'transparentModal'
+                    }}
+                />
+
+                <Stack.Screen
+                    name="AddToPlaylistPage"
+                    component={AddToPlaylistPage}
+                    options={{
+                        headerShown: false,
+                        presentation: 'transparentModal'
+                    }}
+                />
+
+                <Stack.Screen
+                    name="AddPlaylistPage"
+                    component={AddPlaylistPage}
+                    options={{
+                        headerShown: false,
+                        presentation: 'transparentModal'
+                    }}
+                />
+
             </Stack.Navigator>
 
         </NavigationContainer>

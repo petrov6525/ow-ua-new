@@ -17,6 +17,9 @@ export const NeedAuth = ({message}) => {
         if (!params?.text) {
             return ;
         }
+        if (!params?.accessBack) {
+            return;
+        }
         const backHandler = BackHandler.addEventListener(
             'hardwareBackPress',
             backPressHandler
