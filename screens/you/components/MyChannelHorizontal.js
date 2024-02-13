@@ -1,36 +1,38 @@
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../../styles/font";
 import {VideoMini} from "./VideoMini";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {useNavigation} from "@react-navigation/native";
+import {useEffect} from "react";
+import {useGetAllUserVideoQuery} from "../../../api/video/VideoApi";
 
 
-export const MyChannelHorizontal = () => {
+export const MyChannelHorizontal = ({user}) => {
     const navigation = useNavigation();
+    const {data, refetch, isLoading} = useGetAllUserVideoQuery(user?.id);
+    useEffect(() => {
+        refetch();
+    }, []);
     return(
         <View style={styles.view}>
             <View style={styles.header}>
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('YouVideos', {title: 'Мій канал'})}
-                    style={styles.textBlock}
-                >
-                    <MaterialCommunityIcons name="human-male-board" color={'white'} size={25}/>
-                    <Text style={styles.text}>Мій канал</Text>
-                </TouchableOpacity>
+                {isLoading ? <ActivityIndicator size={"small"} /> :
+                    <TouchableOpacity
+                        onPress={()=>navigation.navigate('ChannelPage', {channel: user})}
+                        style={styles.textBlock}
+                    >
+                        <MaterialCommunityIcons name="human-male-board" color={'white'} size={25}/>
+                        <Text style={styles.text}>Мій канал</Text>
+                    </TouchableOpacity>
+                }
             </View>
-
-            <ScrollView
-                horizontal={true}
-            >
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-            </ScrollView>
+            {data &&
+                <ScrollView
+                    horizontal={true}
+                >
+                    {data.map(item=>(<VideoMini key={item.id} video={item} />))}
+                </ScrollView>
+            }
         </View>
     )
 }

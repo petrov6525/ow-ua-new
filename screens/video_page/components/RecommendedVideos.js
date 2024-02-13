@@ -1,19 +1,56 @@
-import {Video} from "../../home/components/VideoComponent";
+import {useSelector} from "react-redux";
+import {useGetAllVideoQuery} from "../../../api/video/VideoApi";
+import {ActivityIndicator, SafeAreaView, Text, TouchableOpacity} from "react-native";
+import {fontStyles} from "../../../styles/font";
+import {useEffect, useMemo} from "react";
+import {VideoComponent} from "../../home/components/VideoComponent";
 
 
-export const RecommendedVideos = () => {
+export const RecommendedVideos = ({currentVideoId}) => {
+    const {data, refetch, error, isLoading} = useGetAllVideoQuery();
+
+    const videoData = useMemo(()=>{
+        if (!data) return [];
+            return data.filter(item=>item.id !== currentVideoId)
+    },[data]);
+
+
+    useEffect(() => {
+        console.log("Error: ", error);
+    }, [error]);
+
+    useEffect(() => {
+        // refetch();
+    }, []);
+
+
+    const onPress = () => {
+        refetch();
+    }
+
+    if (isLoading) {
+        return (
+            <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator size={"large"}/>
+                <Text style={fontStyles.noirProMedium}>Завантаження...</Text>
+            </SafeAreaView>
+        )
+    }
+
+    if (error) {
+        return (
+            <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={fontStyles.noirProMedium}>Виникла помилка...</Text>
+                <TouchableOpacity onPress={onPress}>
+                    <Text style={fontStyles.noirProBold}>Оновити</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+        )
+    }
+
     return(
         <>
-            <Video style={{id: 1}}/>
-            <Video style={{id: 2}}/>
-            <Video style={{id: 3}}/>
-            <Video style={{id: 4}}/>
-            <Video style={{id: 5}}/>
-            <Video style={{id: 6}}/>
-            <Video style={{id: 7}}/>
-            <Video style={{id: 8}}/>
-            <Video style={{id: 9}}/>
-            <Video style={{id: 10}}/>
+            {videoData.map(video=> (<VideoComponent key={video.id} video={video} />))}
         </>
     )
 }

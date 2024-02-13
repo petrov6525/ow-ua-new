@@ -1,16 +1,36 @@
 import {Image, Text, TouchableOpacity, View, StyleSheet} from "react-native";
 import {fontStyles} from "../../../styles/font";
 import {useNavigation} from "@react-navigation/native";
-import {useState} from "react";
+import {useMemo, useState} from "react";
+import {useIsSubscribedQuery, useToggleSubscribeMutation} from "../../../api/video/GradeApi";
 
 
 export const Subscribe = ({subscribe}) => {
     const {navigate} = useNavigation();
-    const [isSubscribe, setIsSubscribe] = useState(true);
-    const text = isSubscribe ? "Відписатись" : "Підписатись";
-    const color= isSubscribe ? 'transparent' : '#5A58C9';
+    const {data, refetch, isLoading} = useIsSubscribedQuery(subscribe.id);
+    const [toggleSubscribe, {isLoading: toggleLoading}] = useToggleSubscribeMutation();
+
+    const isSubscribed = useMemo(()=>{return data ?? false},[data])
+
+    const backgroundColor = isSubscribed ? '#5A58C9' : 'transparent';
+    const text = isSubscribed ? "Відписатись" : "Підписатись";
+
+    const pressHandle = async () => {
+        try {
+            const result = await toggleSubscribe({
+                target_user_id: subscribe.id
+            });
+            if (result) {
+                refetch();
+            }
+        } catch (e) {
+            console.log("Error:", e)
+        }
+    }
+
+
     const handleTouch = () => {
-        navigate('ChannelPage');
+        navigate('ChannelPage', {channel: subscribe});
     }
 
     return (
@@ -19,18 +39,18 @@ export const Subscribe = ({subscribe}) => {
         >
             <TouchableOpacity onPress={handleTouch}>
                 <Image
-                    source={require('../../../assets/channel_profile_logo.png')}
-                    style={{width: 70, height: 70}}
+                    source={{uri: subscribe.photoUrl}}
+                    style={{width: 70, height: 70, borderRadius: 50}}
                 />
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={handleTouch}
                 style={{flex: 1, marginLeft: 10}}
             >
-                <Text style={styles.titleText}>{subscribe.channelName}</Text>
+                <Text style={styles.titleText}>{subscribe.displayName}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.button, {backgroundColor: color}]} onPress={()=>setIsSubscribe(!isSubscribe)}>
+            <TouchableOpacity style={[styles.button, {backgroundColor: backgroundColor}]} onPress={pressHandle}>
                 <Text style={styles.titleText}>{text}</Text>
             </TouchableOpacity>
         </View>

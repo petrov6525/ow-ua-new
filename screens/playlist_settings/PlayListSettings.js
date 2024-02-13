@@ -1,18 +1,22 @@
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../styles/font";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
+import {useEffect} from "react";
 
 
 export const PlayListSettings = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const {playlist} = route.params;
+
     return(
         <SafeAreaView style={styles.modalContainer}>
             <View style={styles.modalContent}>
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={()=>navigation.navigate('EditPlayList')}
+                    onPress={()=>navigation.navigate('EditPlayList', {playlist: playlist})}
                 >
                     <Text style={styles.text}>Редагувати</Text>
                     <MaterialCommunityIcons name="lead-pencil" color={'rgba(255,255,255,0.8)'} size={25}/>
@@ -20,7 +24,7 @@ export const PlayListSettings = () => {
 
                 <TouchableOpacity
                     style={{flexDirection: 'row'}}
-                    onPress={()=>navigation.navigate('DeletePlaylist')}
+                    onPress={()=>navigation.navigate('DeletePlaylist', {playlistId: playlist.id})}
                 >
                     <Text style={styles.text}>Видалити</Text>
                     <MaterialCommunityIcons name="delete" color={'rgba(255,255,255,0.8)'} size={25}/>

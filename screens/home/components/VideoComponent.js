@@ -27,7 +27,7 @@ export const VideoComponent = ({video}) => {
     }
 
     const handleChannelPage = () => {
-        // navigation.navigate('ChannelPage');
+        navigation.navigate('ChannelPage', {channel: video.user});
     }
 
     if (video) {

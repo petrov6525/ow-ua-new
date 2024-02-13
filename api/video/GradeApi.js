@@ -4,7 +4,7 @@ import {BASE_URL, ROUTES} from '../constants';
 
 export const GradeApi = createApi({
             reducerPath: 'GradeApi',
-            tagTypes: ['Comments'],
+            tagTypes: ['Comments', 'SubscribersVideos', 'SubscribersCount', 'LikedVideos'],
             baseQuery: customBaseQuery,
             endpoints: (builder) => ({
                 getLikes: builder.query({
@@ -36,14 +36,16 @@ export const GradeApi = createApi({
                         url: ROUTES.SEND_LIKE,
                         method: 'POST',
                         body: like
-                    })
+                    }),
+                    invalidatesTags: ['LikedVideos']
                 }),
                 sendDisLike: builder.mutation({
                     query: (like) => ({
                         url: ROUTES.SEND_DISLIKE,
                         method: 'POST',
                         body: like
-                    })
+                    }),
+                    invalidatesTags: ['LikedVideos']
                 }),
                 isSubscribed: builder.query({
                     query: (targetUserId) => ROUTES.IS_SUBSCRIBED + `?targetUserId=${targetUserId}`
@@ -53,7 +55,12 @@ export const GradeApi = createApi({
                         url: ROUTES.TOGGLE_SUBSCRIPTION,
                         method: 'POST',
                         body: data
-                    })
+                    }),
+                    invalidatesTags: ['SubscribersVideos', 'SubscribersCount']
+                }),
+                getLikedVideos: builder.query({
+                    query: () => ROUTES.GET_LIKED_VIDEOS,
+                    providesTags: ['LikedVideos']
                 })
             }),
         }
@@ -70,5 +77,6 @@ export const {
     useSendLikeMutation,
     useSendDisLikeMutation,
     useIsSubscribedQuery,
-    useToggleSubscribeMutation
+    useToggleSubscribeMutation,
+    useGetLikedVideosQuery,
 } = GradeApi;

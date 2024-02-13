@@ -1,19 +1,45 @@
-import {TouchableOpacity, StyleSheet, Text} from "react-native";
-import {useState} from "react";
+import {TouchableOpacity, StyleSheet, Text, ActivityIndicator} from "react-native";
+import {useEffect, useMemo, useState} from "react";
 import {fontStyles} from "../../../styles/font";
+import {isVideoOwner} from "../../../helpers/videoInfoHelper";
+import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
+import {useIsSubscribedQuery, useToggleSubscribeMutation} from "../../../api/video/GradeApi";
 
 
-export const SubscribeInfoButton = () => {
-    const [isSubscribed, setIsSubscribed ] = useState(true);
-    const text = !isSubscribed ? "Ви підписані" : "Підписатись";
-    const color= isSubscribed ? '#5A58C9' : 'transparent';
+export const SubscribeInfoButton = ({channel}) => {
+    const {data, refetch, isLoading} = useIsSubscribedQuery(channel.id);
+    const [toggleSubscribe, {isLoading: toggleLoading}] = useToggleSubscribeMutation();
 
-    return(
+    const isSubscribed = useMemo(() => {
+        return data ?? false
+    }, [data])
+
+    const backgroundColor = isSubscribed ? '#5A58C9' : 'transparent';
+    const text = isSubscribed ? "Ви підписані" : "Підписатись";
+
+    const pressHandle = async () => {
+        try {
+            const result = await toggleSubscribe({
+                target_user_id: channel.id
+            });
+            if (result) {
+                refetch();
+            }
+        } catch (e) {
+            console.log("Error:", e)
+        }
+    }
+
+
+    return (
         <TouchableOpacity
-            onPress={()=> setIsSubscribed(!isSubscribed)}
-            style={[styles.button, {backgroundColor: color}]}
+            onPress={pressHandle}
+            style={[styles.button, {backgroundColor: backgroundColor}]}
         >
-            <Text style={styles.text}>{text}</Text>
+            {isLoading || toggleLoading ?
+                <ActivityIndicator size={"small"}/> :
+                <Text style={styles.text}>{text}</Text>}
         </TouchableOpacity>
     )
 }

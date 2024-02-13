@@ -1,20 +1,51 @@
-import {useNavigation} from "@react-navigation/native";
-import {SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {useNavigation, useRoute} from "@react-navigation/native";
+import {ActivityIndicator, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../styles/font";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useEditPlaylistMutation} from "../../api/video/PlaylistApi";
 
 
 export const EditPlayList = () => {
     const navigation = useNavigation();
-    const [statusIndex, setStatusIndex] = useState(0);
+    const route = useRoute();
+    const {playlist} = route.params;
+    const [statusIndex, setStatusIndex] = useState(playlist.accessStatus.id);
+    const [title, setTitle] = useState(playlist.title);
+    const [editPlaylist] = useEditPlaylistMutation();
+    const [isRequest, setIsRequest] = useState(false);
+
+    const handleEdit = async () => {
+        if (title.trim() === "") return;
+        setIsRequest(true);
+        try {
+            await editPlaylist({
+                id: playlist.id,
+                title: title,
+                accessStatus: {
+                    id: statusIndex
+                }
+            }).unwrap();
+            navigation.navigate('Playlists');
+        } catch (e) {
+            console.log("Error: ", e);
+        } finally {
+            setIsRequest(false);
+        }
+    }
+
+
     return (
         <SafeAreaView style={styles.modalContainer}>
             <View style={styles.modalContent}>
                 <View>
                     <View>
                         <Text style={fontStyles.noirProRegular}>Назва:</Text>
-                        <TextInput style={styles.input}/>
+                        <TextInput
+                            value={title}
+                            onChangeText={text=>setTitle(text)}
+                            style={styles.input}
+                        />
                     </View>
 
                     <View style={{marginTop: 20}}>
@@ -26,18 +57,18 @@ export const EditPlayList = () => {
 
                         <View style={{marginTop: 20, padding: 10}}>
                             <TouchableOpacity
-                                onPress={()=>setStatusIndex(0)}
-                                style={[styles.statusButton,{backgroundColor: statusIndex === 0 ? 'rgba(90,88,201,0.4)' : 'transparent'}]}
-                            >
-                                <MaterialCommunityIcons name="shield-lock-outline" color={'rgba(255,255,255,0.8)'} size={30}/>
-                                <Text style={styles.statusText}>Приватний</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
                                 onPress={()=>setStatusIndex(1)}
                                 style={[styles.statusButton,{backgroundColor: statusIndex === 1 ? 'rgba(90,88,201,0.4)' : 'transparent'}]}
                             >
                                 <MaterialCommunityIcons name="account-group-outline" color={'rgba(255,255,255,0.8)'} size={30}/>
                                 <Text style={styles.statusText}>Публічний</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={()=>setStatusIndex(2)}
+                                style={[styles.statusButton,{backgroundColor: statusIndex === 2 ? 'rgba(90,88,201,0.4)' : 'transparent'}]}
+                            >
+                                <MaterialCommunityIcons name="shield-lock-outline" color={'rgba(255,255,255,0.8)'} size={30}/>
+                                <Text style={styles.statusText}>Приватний</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -52,13 +83,16 @@ export const EditPlayList = () => {
                         <MaterialCommunityIcons name="cancel" color={'rgba(255,255,255,0.8)'} size={20}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={()=>navigation.navigate('Playlists')}
-                    >
-                        <Text style={fontStyles.noirProRegular}>Зберегти</Text>
-                        <MaterialCommunityIcons name="check" color={'rgba(255,255,255,0.8)'} size={25}/>
-                    </TouchableOpacity>
+                    {isRequest ? <ActivityIndicator size={"small"} /> :
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={handleEdit}
+                        >
+                            <Text style={fontStyles.noirProRegular}>Зберегти</Text>
+                            <MaterialCommunityIcons name="check" color={'rgba(255,255,255,0.8)'} size={25}/>
+                        </TouchableOpacity>
+                    }
+
                 </View>
 
 
@@ -99,6 +133,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 50,
+        height: 30
     },
     statusButton: {
         // backgroundColor: 'rgba(90,88,201,0.4)',

@@ -62,7 +62,7 @@ export const VideoPage = () => {
                     horizontal={false}
                     stickyHeaderHiddenOnScroll={true}
                     stickyHeaderIndices={[0]}
-                    style={{marginBottom: 465}}
+                    style={{marginBottom: 365}}
                 >
 
                     <View style={{backgroundColor: '#0C0F14'}}>
@@ -70,7 +70,7 @@ export const VideoPage = () => {
                         <Panel/>
                         <Comments videoId={videoParams.video.id}/>
                     </View>
-                    {/*<RecommendedVideos />*/}
+                    <RecommendedVideos currentVideoId={videoParams.video.id} />
                 </ScrollView>
             </View>
         </SafeAreaView>

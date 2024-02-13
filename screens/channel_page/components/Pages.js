@@ -4,8 +4,8 @@ import {MainPage} from "./MainPage";
 import {VideosPage} from "./VideosPage";
 
 
-export const Pages = ({index}) => {
+export const Pages = ({index, userId}) => {
     const text = index === 0 ? 'Main' : 'Videos';
     if (index === 0 ) return <MainPage />
-    if (index === 1) return <VideosPage />
+    if (index === 1) return <VideosPage userId={userId} />
 }

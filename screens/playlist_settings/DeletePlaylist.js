@@ -1,11 +1,27 @@
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../styles/font";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
+import {useDeletePlaylistMutation} from "../../api/video/PlaylistApi";
 
 
 export const DeletePlaylist = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const {playlistId} = route.params;
+    const [deletePlaylist] = useDeletePlaylistMutation();
+
+    const handleDelete = async () => {
+        try {
+            await deletePlaylist({
+                id: playlistId
+            }).unwrap();
+            navigation.navigate('Playlists');
+        } catch (e) {
+            console.log("Error: ", e);
+        }
+    }
+
     return(
         <SafeAreaView style={styles.modalContainer}>
             <View style={styles.modalContent}>
@@ -22,7 +38,7 @@ export const DeletePlaylist = () => {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={()=>navigation.navigate('Playlists')}
+                        onPress={handleDelete}
                     >
                         <Text style={fontStyles.noirProRegular}>Так</Text>
                         <MaterialCommunityIcons name="check" color={'rgba(255,255,255,0.8)'} size={25}/>

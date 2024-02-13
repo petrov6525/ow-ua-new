@@ -16,6 +16,12 @@ export const VideoApi = createApi({
                 getAllVideo: builder.query({
                     query: () => ROUTES.ALL_VIDEO,
                 }),
+                getAllUserVideo: builder.query({
+                    query: (userId) => ROUTES.ALL_USER_VIDEO + `?userId=${userId}`
+                }),
+                getAllPlaylistVideo: builder.query({
+                    query: (playlistId) => ROUTES.ALL_PLAYLIST_VIDEO + `?playlistId=${playlistId}`
+                }),
                 getVideo: builder.query({
                     query: (videoId) => ROUTES.GET_VIDEO + videoId,
                     invalidatesTags: ['ViewsCount']
@@ -34,5 +40,7 @@ export const {
     useGetAcceptStatusesQuery,
     useGetVideoQuery,
     useGetAllVideoQuery,
+    useGetAllUserVideoQuery,
     useGetViewsCountQuery,
+    useGetAllPlaylistVideoQuery,
 } = VideoApi;

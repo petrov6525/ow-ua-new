@@ -1,12 +1,20 @@
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../../styles/font";
 import {VideoMini} from "./VideoMini";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {useNavigation} from "@react-navigation/native";
+import {useGetLikedVideosQuery} from "../../../api/video/GradeApi";
+import {useEffect} from "react";
 
 
 export const LikedHorizontal = () => {
     const navigation = useNavigation();
+    const {data,isLoading, refetch} = useGetLikedVideosQuery();
+
+    useEffect(() => {
+        refetch();
+    }, [data]);
+
     return(
         <View style={styles.view}>
             <View style={styles.header}>
@@ -19,26 +27,20 @@ export const LikedHorizontal = () => {
                     <Text style={styles.text}>Вподобані</Text>
                 </View>
 
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('YouVideos', {title: 'Вподобані'})}
-                    style={styles.allButton}
-                >
-                    <Text style={styles.allText}>Переглянути все</Text>
-                </TouchableOpacity>
+                {isLoading ? <ActivityIndicator size={"small"} /> :
+                    <TouchableOpacity
+                        onPress={()=>navigation.navigate('YouVideos', {title: 'Вподобані', data: data})}
+                        style={styles.allButton}
+                    >
+                        <Text style={styles.allText}>Переглянути все</Text>
+                    </TouchableOpacity>
+                }
             </View>
-
-            <ScrollView
+            {data && <ScrollView
                 horizontal={true}
             >
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-                <VideoMini />
-            </ScrollView>
+                {data.map(video=>(<VideoMini key={video.id} video={video} />))}
+            </ScrollView>}
         </View>
     )
 }
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
     view: {
         alignItems: 'flex-start',
         // backgroundColor: 'red',
-        marginVertical: 20
+        marginVertical: 20,
+        height: 200
     },
     allButton: {
         backgroundColor: 'rgba(90,88,201,0.4)',

@@ -31,7 +31,7 @@ export const AddVideo = () => {
 
     useEffect(() => {
         if (redirect) {
-            navigation.navigate('Home');
+            // navigation.navigate('Home');
         }
     }, []);
 
@@ -51,6 +51,7 @@ export const AddVideo = () => {
             allowsMultipleSelection: false,
         })
         if (result.canceled) {
+            setVideo("");
             navigation.navigate('Home');
         }
         const uri = result.assets[0].uri
@@ -82,7 +83,6 @@ export const AddVideo = () => {
     }
 
     const handleFinish = async (status, data) => {
-        console.log("Data: ", data);
         if (!status) {
             dispatch(setUploadStatus(false));
             dispatch(setShowUploadStatus(true));

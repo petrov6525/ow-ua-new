@@ -64,7 +64,7 @@ export default function BaseNavigation() {
                                      route,
                                      options,
                                      back}) => {
-                            return <CustomHeader title={channelTitle} />
+                            return <CustomHeader title={channelTitle} route={route} />
                         },
                     }}
                 />

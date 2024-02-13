@@ -1,34 +1,26 @@
 import MainLayout from "../../layouts/mainLayout";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import {SafeAreaView, ScrollView, Text} from "react-native";
+import {FlatList, SafeAreaView, ScrollView, Text} from "react-native";
 import {fontStyles} from "../../../styles/font";
 import {useEffect} from "react";
-import {Video} from "../../home/components/VideoComponent";
+import {VideoComponent} from "../../home/components/VideoComponent";
 
 
 export const YouVideos = () => {
     const route = useRoute();
     const { navigate } = useNavigation();
-    const videoParams = route.params;
+    const {data} = route.params;
+
 
     return(
         <MainLayout>
             <SafeAreaView style={{width: '100%'}}>
-                <ScrollView
-                    scrollEventThrottle={5}
-                    showsVerticalScrollIndicator={false}
-                    horizontal={false}
-                >
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                    <Video/>
-                </ScrollView>
+                {data &&
+                    <FlatList
+                        data={data}
+                        renderItem={({item})=> <VideoComponent video={item} />}
+                    />}
+
             </SafeAreaView>
         </MainLayout>
     )

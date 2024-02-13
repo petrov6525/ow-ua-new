@@ -67,7 +67,7 @@ export const CustomVideoPlayer = ({videoParams}) => {
     }
 
     const handleChannelPage = () => {
-        navigation.navigate('ChannelPage');
+        navigation.navigate('ChannelPage', {channel: videoParams.video.user});
     }
     const ToHome = () => {
         return (

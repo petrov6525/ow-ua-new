@@ -4,9 +4,9 @@ import {useNavigation} from "@react-navigation/native";
 
 
 export const SubscribeMini = ({subscribe}) => {
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const handleTouch = () => {
-        navigate('ChannelPage');
+        navigation.navigate('ChannelPage', {channel: subscribe});
     }
 
     return(
@@ -14,10 +14,10 @@ export const SubscribeMini = ({subscribe}) => {
             style={styles.view}
             onTouchEnd={handleTouch}
         >
-            <Text style={styles.titleText}>{subscribe.channelName}</Text>
+            <Text style={styles.titleText}>{subscribe.displayName}</Text>
             <Image
-                source={require('../../../assets/channel_profile_logo.png')}
-                style={{width: 75, height: 75, marginRight: 20}}
+                source={{uri: subscribe.photoUrl}}
+                style={{width: 75, height: 75, marginRight: 20, borderRadius: 50}}
             />
         </View>
     )
@@ -26,7 +26,7 @@ export const SubscribeMini = ({subscribe}) => {
 const styles = StyleSheet.create({
     view: {
         width: 75,
-        marginLeft: 5,
+        marginHorizontal: 10,
    },
     titleText: {
         ...fontStyles.noirProRegular,

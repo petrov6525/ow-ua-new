@@ -16,9 +16,26 @@ export const PlaylistApi = createApi({
             }),
             invalidatesTags: ['Playlists']
         }),
+        editPlaylist: builder.mutation({
+            query: (data) => ({
+                url: ROUTES.EDIT_PLAYLIST,
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['Playlists']
+        }),
+        deletePlaylist: builder.mutation({
+           query: (playlist) => ({
+               url: ROUTES.PLAYLIST,
+               method: 'DELETE',
+               body: playlist
+           }),
+            invalidatesTags: ['Playlists']
+        }),
         getAllPlaylists: builder.query({
             query: () => ROUTES.ALL_PLAYLISTS,
-            providesTags: ['Playlists']
+            providesTags: ['Playlists'],
+            keepUnusedDataFor: 1
         }),
         getAllPlaylistsForVideo: builder.query({
             query: (videoId) => ROUTES.ALL_PLAYLISTS_FOR_VIDEO + `?videoId=${videoId}`,
@@ -29,14 +46,17 @@ export const PlaylistApi = createApi({
                 url: ROUTES.ADD_VIDEO_TO_PLAYLIST,
                 method: 'POST',
                 body: data
-            })
+            }),
+            invalidatesTags: ['Playlists']
         })
     })
 })
 
 export const {
     useCreatePlaylistMutation,
+    useEditPlaylistMutation,
     useGetAllPlaylistsQuery,
     useGetAllPlaylistsForVideoQuery,
     useAddVideoToPlaylistMutation,
+    useDeletePlaylistMutation,
 } = PlaylistApi;

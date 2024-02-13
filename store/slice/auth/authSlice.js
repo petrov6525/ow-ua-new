@@ -9,6 +9,7 @@ const initialState = {
     registerEmail: "",
     accessToken: "",
     refreshToken: "",
+    profilePhotoUrl: "",
 }
 
 const authSlice = createSlice({
@@ -34,6 +35,9 @@ const authSlice = createSlice({
         },
         setAccessToken: (state, action) => {
             state.accessToken = action.payload
+        },
+        setProfilePhotoUrl: (state, action) => {
+            state.profilePhotoUrl = actio.payload
         }
     }
 })
@@ -44,6 +48,7 @@ export const {
     setIsRequest,
     setRegisterEmail,
     logout,
-    setAccessToken
+    setAccessToken,
+    setProfilePhotoUrl
 } = authSlice.actions;
 export default authSlice.reducer;

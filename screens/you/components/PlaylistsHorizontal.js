@@ -1,13 +1,20 @@
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {fontStyles} from "../../../styles/font";
 import {VideoMini} from "./VideoMini";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {useNavigation} from "@react-navigation/native";
 import {PlaylistMini} from "./PlaylistMini";
+import {useGetAllPlaylistsQuery} from "../../../api/video/PlaylistApi";
+import {useEffect} from "react";
 
 
 export const PlaylistsHorizontal = () => {
     const navigation = useNavigation();
+    const {data, isLoading, error, refetch} = useGetAllPlaylistsQuery();
+    useEffect(() => {
+        refetch();
+    }, []);
+
     return(
         <View style={styles.view}>
             <View style={styles.header}>
@@ -16,22 +23,22 @@ export const PlaylistsHorizontal = () => {
                     <Text style={styles.text}>Плейлісти</Text>
                 </View>
 
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('Playlists', {title: 'Плейлісти'})}
-                    style={styles.allButton}
-                >
-                    <Text style={styles.allText}>Переглянути все</Text>
-                </TouchableOpacity>
+                {isLoading ? <ActivityIndicator size={"small"} /> :
+                    <TouchableOpacity
+                        onPress={()=>navigation.navigate('Playlists', {title: 'Плейлісти'})}
+                        style={styles.allButton}
+                    >
+                        <Text style={styles.allText}>Переглянути все</Text>
+                    </TouchableOpacity>
+                }
             </View>
 
-            <ScrollView
+            {data && <ScrollView
                 horizontal={true}
             >
-                <PlaylistMini />
-                <PlaylistMini />
-                <PlaylistMini />
-                <PlaylistMini />
+                {data.map(item=>(<PlaylistMini key={item.id} playlist={item} />))}
             </ScrollView>
+            }
         </View>
     )
 }

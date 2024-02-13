@@ -2,22 +2,23 @@ import { StyleSheet, Text, View} from "react-native";
 import {fontStyles} from "../../../styles/font";
 import {useNavigation} from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {useEffect} from "react";
 
 
-export const PlaylistMini = () => {
+export const PlaylistMini = ({playlist}) => {
     const navigation = useNavigation();
     return(
         <View
-            onTouchEnd={()=>navigation.navigate('PlayListPage')}
+            onTouchEnd={()=>navigation.navigate('PlayListPage', {playlist: playlist})}
             style={styles.view}
         >
             <View style={styles.playList}>
                 <MaterialCommunityIcons name="animation-play-outline" color={'rgba(255,255,255,0.5)'} size={30}/>
-                <Text style={[fontStyles.noirProRegular, {color: 'rgba(255,255,255,0.5)'}]}>24 video</Text>
+                <Text style={[fontStyles.noirProRegular, {color: 'rgba(255,255,255,0.5)'}]}>{playlist?.videoCount} video</Text>
             </View>
 
             <View style={styles.textBox}>
-                <Text style={styles.videoTitle}>Playlist Title</Text>
+                <Text style={styles.videoTitle}>{playlist?.title}</Text>
             </View>
         </View>
     )
